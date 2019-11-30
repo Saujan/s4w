@@ -10,25 +10,24 @@ import MapDashboard from './map_dashboard'
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
 
 const sidebarStyles = {
-    
+	
 }
 
 class App extends Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      sidebarOpen: false
-    };
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
+	super(props);
+	this.state = {
+	  sidebarOpen: false
+	};
+	this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
   onSetSidebarOpen(open) {
-    this.setState({ sidebarOpen: open });
+	this.setState({ sidebarOpen: open });
   }
 
   render(){
     let show_button = this.state.show_button;
-    let button_tag = false ? <Button onClick={() => this.onSetSidebarOpen(true)} variant='primary'> Filter Portion</Button> : ''
     return(
           <Sidebar
             sidebar={<SideBarContent />}

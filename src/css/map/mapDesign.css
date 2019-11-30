@@ -1,0 +1,33 @@
+.mapDashboard {
+	height: 100%
+}
+.logo_legend {
+  position: fixed;
+  padding: 3px;
+  top: .5em;
+  right: 1em;
+  height: 200px;
+  width: 200px;
+
+}
+.logo img {
+  max-height:50%;
+  max-width:50%;
+}
+
+.legend {
+	float: left;
+	max-height:50%;
+	max-width: 100%;
+	background: #eee;
+
+}
+
+.legend ul {
+	list-style-type: none;
+	float: left;
+	padding-left: 0px;
+}
+.legend li {
+	margin-bottom: 6px;
+}
