@@ -5,6 +5,7 @@ import Sidebar from "react-sidebar";
 import SideBarContent from './sidebar.js';
 import './bootstrap-multiselect.css';
 import Multiselect from 'react-bootstrap-multiselect';
+import MapDashboard from './map_dashboard'
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
 
@@ -26,48 +27,20 @@ class App extends Component {
   }
 
   render(){
+    let show_button = this.state.show_button;
+    let button_tag = false ? <Button onClick={() => this.onSetSidebarOpen(true)} variant='primary'> Filter Portion</Button> : ''
     return(
-      <Container fluid>
-        <Row>
           <Sidebar
             sidebar={<SideBarContent />}
             open={this.state.sidebarOpen}
             onSetOpen={this.onSetSidebarOpen}
             styles={{ sidebar: { background: "white" , width:'200px', position:'fixed'} }}
             pullRight={false}
-          >    
-          <Button onClick={() => this.onSetSidebarOpen(true)} variant='primary'>
-            Open sidebar
-          </Button>
+          > 
+          { button_tag }
+        <MapDashboard controllSidebar = {this.onSetSidebarOpen}/>
         </Sidebar>
-        </Row>
-        <Row>
-          <Image 
-            src = 'https://wallpaperaccess.com/full/439801.jpg'
-            fluid/>
-        </Row>
-        <Row>
-          <Image 
-            src = 'https://wallpaperaccess.com/full/439801.jpg'
-            fluid/>
-        </Row>
-        <Row>
-          <Image 
-            src = 'https://wallpaperaccess.com/full/439801.jpg'
-            fluid/>
-        </Row>
-        <Row>
-          <Image 
-            src = 'https://wallpaperaccess.com/full/439801.jpg'
-            fluid/>
-        </Row>
-        <Row>
-          <Image 
-            src = 'https://wallpaperaccess.com/full/439801.jpg'
-            fluid/>
-        </Row>
-      </Container>
-      
+
     )
   }
 }
