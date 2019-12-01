@@ -33,7 +33,7 @@ class App extends Component {
             sidebar={<SideBarContent />}
             open={this.state.sidebarOpen}
             onSetOpen={this.onSetSidebarOpen}
-            styles={{ sidebar: { background: "white" , width:'200px', position:'fixed'} }}
+            styles={{ sidebar: { background: '#bee5eb' , width:'275px', position:'fixed'} }}
             pullRight={false}
           >
         <MapDashboard controllSidebar = {this.onSetSidebarOpen}/>
