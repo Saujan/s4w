@@ -1,0 +1,38 @@
+
+@mixin filter_button_container() {
+	position: fixed;
+  padding: 3px;
+  top: .5em;
+  right: 1em;
+  height: 200px;
+  width: 200px;
+}
+
+@media (min-width: 1281px) {
+	.filter_button_containter {
+		@include filter_button_container();
+	  button {
+	  	font-size: 12px;
+	  	float: left;
+	  	background: blue;
+	  	width: 50%;
+	  	margin-left: 5em;
+	  }
+	}
+
+}
+
+@media (min-width: 350px) and (max-width: 400px) {
+	.filter_button_containter {
+		@include filter_button_container();
+		button {
+			font-size: 12px;
+			float: left;
+			background: blue;
+			width: 50%;
+			margin-left: 5em;
+		}
+	}
+}
+
+

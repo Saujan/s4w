@@ -1,7 +1,8 @@
 import React from 'react'
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { Button } from 'react-bootstrap';
-import './css/map/mapDesign.css'
+import './css/map/mapDesign.scss'
+import './css/map/mixin.scss'
 
 class MapDashboard extends React.Component {
   constructor(props){
@@ -26,8 +27,8 @@ class MapDashboard extends React.Component {
           zoom={15}
         >
         </Map>
-        <div className="logo_legend">
-            <Button variant='primary' onClick={this.controlSidebar}>Filter Portion</Button>
+        <div className="filter_button_containter">
+            <Button onClick={this.controlSidebar}>Filter Portion</Button>
         </div>
         </div>
     );
