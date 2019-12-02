@@ -18,47 +18,51 @@ class sideBarContent extends Component {
         super(props);
         this.state = {
             data : {data},
-            startDate : new Date(),
-            endDate : new Date()
+            start_date : new Date(),
+            end_date : new Date()
         };
     }
+
     handleChangeStartDate = date => {
-        this.setState({
-          startDate: date
-        });
-      };
-      handleChangeEndDate = date => {
-        this.setState({
-            endDate: date
-        });
-      };
+      this.setState({
+        start_date: date
+      });
+    };
+
+    handleChangeEndDate = date => {
+      this.setState({
+          end_date: date
+      });
+    };
+
     render(){
-        const CustomStartDateInput = ({ value, onClick}) => (
-            <Button className='btn btn-primary' onClick={onClick}>
-                {'Start Date : ' + value}
-            </Button>
-        );
-        const CustomEndDateInput = ({ value, onClick}) => (
-            <InputGroup className="mb-3" onClick={onClick}>
-                <InputGroup.Prepend>
-                <InputGroup.Text id="basic-addon1">End Date</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
+      const CustomStartDateInput = ({ value, onClick}) => (
+          <Button className='btn btn-primary' onClick={onClick}>
+              {'Start Date : ' + value}
+          </Button>
+      );
+      const CustomEndDateInput = ({ value, onClick}) => (
+          <InputGroup className="mb-3" onClick={onClick}>
+              <InputGroup.Prepend>
+              <InputGroup.Text id="basic-addon1">End Date</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl
                 placeholder={value}
                 aria-label='End Date'
                 aria-describedby="basic-addon1"
-                />
-            </InputGroup>
-        );
-        return(
-            <div>
-                <ListGroup variant="flush info" >
+              />
+          </InputGroup>
+      );
+
+      return(
+          <div>
+              <ListGroup variant="flush info" >
                 <ListGroup.Item variant='info'>
-                <DropdownButton id="dropdown-basic-button" onChange={this.handleChange} title='Select'>
-                    <Dropdown.Item >Action</Dropdown.Item>
-                    <Dropdown.Item >Another action</Dropdown.Item>
-                    <Dropdown.Item >Something else</Dropdown.Item>
-                </DropdownButton>
+                  <DropdownButton id="dropdown-basic-button" onChange={this.handleChange} title='Select'>
+                      <Dropdown.Item >Action</Dropdown.Item>
+                      <Dropdown.Item >Another action</Dropdown.Item>
+                      <Dropdown.Item >Something else</Dropdown.Item>
+                  </DropdownButton>
                 </ListGroup.Item>
                 <ListGroup.Item variant='info'>
                     <div className='bg-primary border border-dark rounded text-white'>
@@ -73,44 +77,42 @@ class sideBarContent extends Component {
                     </div>
                 </ListGroup.Item>
                 <ListGroup.Item variant='info'>
-                <DatePicker 
-                    id='Start_Date'
-                    selected={this.state.startDate}
-                    onChange={this.handleChangeStartDate}
-                    dateFormat='yyyy-MM-dd'
-                    placeholderText='Start Date'
-                    customInput={<CustomStartDateInput/>}
-                />
+                  <DatePicker
+                      id='start_date'
+                      selected={this.state.start_date}
+                      onChange={this.handleChangeStartDate}
+                      dateFormat='yyyy-MM-dd'
+                      placeholderText='Start Date'
+                      customInput={<CustomStartDateInput/>}
+                  />
                 </ListGroup.Item>
                 <ListGroup.Item variant='info'>
-                <DatePicker 
-                    id='Start_Date'
-                    selected={this.state.endDate}
-                    onChange={this.handleChangeEndDate}
-                    dateFormat='yyyy-MM-dd'
-                    placeholderText='End Date'
-                    customInput={<CustomEndDateInput/>}
-                    popperModifiers={{
-                        keepTogether: {
-                            enabled: true
-                        },
-                        offset: {
-                          enabled: true,
-                          offset: "0px, -5px"
-                        },
-                        preventOverflow: {
-                          enabled: false,
-                          escapeWithReference: false,
-                          boundariesElement: "viewport"
-                        }
-                      }}
-                />
+                  <DatePicker
+                      id='end_date'
+                      selected={this.state.end_date}
+                      onChange={this.handleChangeEndDate}
+                      dateFormat='yyyy-MM-dd'
+                      placeholderText='End Date'
+                      customInput={<CustomEndDateInput/>}
+                      popperModifiers={{
+                          keepTogether: {
+                              enabled: true
+                          },
+                          offset: {
+                            enabled: true,
+                            offset: "0px, -5px"
+                          },
+                          preventOverflow: {
+                            enabled: false,
+                            escapeWithReference: false,
+                            boundariesElement: "viewport"
+                          }
+                        }}
+                  />
                 </ListGroup.Item>
-                </ListGroup>
-                
-                
-            </div>
-        );
+              </ListGroup>
+          </div>
+      );
     }
 }
 
