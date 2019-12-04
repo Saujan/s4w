@@ -8,6 +8,7 @@ import './App.css';
 import Multiselect from 'react-bootstrap-multiselect';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import logo from './logo.png'
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
@@ -58,11 +59,7 @@ class sideBarContent extends Component {
           <div>
               <ListGroup variant="flush info" >
                 <ListGroup.Item variant='info'>
-                  <DropdownButton id="dropdown-basic-button" onChange={this.handleChange} title='Select'>
-                      <Dropdown.Item >Action</Dropdown.Item>
-                      <Dropdown.Item >Another action</Dropdown.Item>
-                      <Dropdown.Item >Something else</Dropdown.Item>
-                  </DropdownButton>
+                  <img src={logo} width='100%' height='100%'/>
                 </ListGroup.Item>
                 <ListGroup.Item variant='info'>
                     <div className='bg-primary border border-dark rounded text-white'>
