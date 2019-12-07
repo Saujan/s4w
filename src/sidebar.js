@@ -13,48 +13,85 @@ import MultiSelect from "@khanacademy/react-multi-select";
 import './App.css';
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
-const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
-const data_multi = [{ value:'Nepal', selected:true }, { value: 'America' }, { value:'South Africa' }]
-const options = [
-  {label: "One", value: 1},
-  {label: "Two", value: 2},
-  {label: "Three", value: 3},
-];
-const single_options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+const placeholder_project = 'Project'
+const placeholder_sitetype = 'SiteType'
+const placeholder_parameter = 'Parameter'
+const placeholder_period = 'Period'
 
 class sideBarContent extends Component {
     constructor(props){
         super(props);
         this.state = {
-            data : data_multi,
-            start_date : new Date(),
-            end_date : new Date(),
-            selected : [],
-            single_dropdown_content_1 : 'Single Item Dropdown',
-            selectedOption : ''
+            filterContent: props.filterContent
         };
-        this.handleSingleItemDropdown = this.handleSingleItemDropdown.bind(this);
     }
 
     handleChangeStartDate = date => {
       this.setState({
-        start_date: date
+        filterContent: {
+          ...this.state.filterContent,
+          period: {
+            ...this.state.filterContent.period,
+            startDate: date
+          }
+        }
       });
     };
 
     handleChangeEndDate = date => {
       this.setState({
-          end_date: date
+        filterContent: {
+          ...this.state.filterContent,
+          period: {
+            ...this.state.filterContent.period,
+            endDate: date
+          }
+        }
       });
     };
 
     handleSingleItemDropdown(value){
       this.setState({ selectedOption : value});
     };
+
+    changeHandler(idendity, value) {
+      let valueSet = {...this.state.filterContent[idendity]}
+      valueSet.selected = value
+      if (idendity != 'siteType'){
+        this.setState({
+          filterContent: {
+            ...this.state.filterContent,
+            [idendity]: valueSet
+          }
+        });
+      }
+      else {
+        valueSet.currentSiteType = value.value
+        this.setState({
+          filterContent: {
+            ...this.state.filterContent,
+            [idendity]: valueSet,
+            parameter: {
+              ...this.state.filterContent.parameter,
+              selected: []
+            }
+          }
+        });
+
+      }
+    }
+
+    dateController(e) {
+      this.setState({
+        filterContent: {
+          ...this.state.filterContent,
+          period: {
+            ...this.state.filterContent.period,
+            isRangeDateDisabled: !e.target.checked
+          }
+        }
+      })
+    }
 
     render(){
       const CustomStartDateInput = ({ value, onClick}) => (
@@ -72,7 +109,7 @@ class sideBarContent extends Component {
       const CustomEndDateInput = ({ value, onClick}) => (
           <InputGroup onClick={onClick}>
               <InputGroup.Prepend className="Hero">
-              <InputGroup.Text id="basic-addon2">End   Date</InputGroup.Text>
+              <InputGroup.Text id="basic-addon2">End Date</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
                 placeholder={value}
@@ -81,7 +118,7 @@ class sideBarContent extends Component {
               />
           </InputGroup>
       );
-
+      const { project, siteType, parameter, period } = this.state.filterContent
       return(
           <div>
               <ListGroup variant="flush info" >
@@ -98,41 +135,48 @@ class sideBarContent extends Component {
                     }
                   >
                     <MultiSelect
-                      options= {options}
-                      selected={this.state.selected}
-                      onSelectedChanged={selected => this.setState({selected})}
+                      options= {project.option}
+                      selected={project.selected}
+                      onSelectedChanged={selected => this.changeHandler('project', selected)}
                       disableSearch={true}
                       overrideStrings={{
-                        selectSomeItems : 'Select Multiple',
-                        selectAll: 'Check ALL'
+                        selectSomeItems : placeholder_project,
+                        selectAll: 'Check All'
                       }}
                     />
                   </OverlayTrigger>
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
                   <Select
-                    value={this.state.selectedOption}
-                    onChange={this.handleSingleItemDropdown}
-                    options={single_options}
-                    placeholder='Select Single'
+                    value={siteType.selected}
+                    onChange={selected => this.changeHandler( 'siteType', selected)}
+                    options={siteType.option}
+                    placeholder={placeholder_sitetype}
                   />
                 </ListGroup.Item>
                 
                 <ListGroup.Item variant="info">
-                  <Select
-                    value={this.state.selectedOption}
-                    onChange={this.handleSingleItemDropdown}
-                    options={single_options}
-                    placeholder='Select Single'
+                  
+                  <MultiSelect
+                    options= {siteType.currentSiteType.length && parameter[siteType.currentSiteType].option || []}
+                    selected={siteType.currentSiteType.length && parameter.selected || []}
+                    onSelectedChanged={selected => this.changeHandler('parameter', selected)}
+                    disableSearch={true}
+                    overrideStrings={{
+                      selectSomeItems : placeholder_parameter,
+                      selectAll: 'Check All'
+                    }}
                   />
+
                 </ListGroup.Item>
                 
                 <ListGroup.Item variant="info">
                   <Select
-                    value={this.state.selectedOption}
-                    onChange={this.handleSingleItemDropdown}
-                    options={single_options}
-                    placeholder='Select Single'
+                    value={period.selected}
+                    onChange={selected => this.changeHandler( 'period', selected)}
+                    options={period.option}
+                    placeholder={placeholder_period}
+                    isDisabled={!period.isRangeDateDisabled}
                   />
                 </ListGroup.Item>
                 {/* <ListGroup.Item variant='info'>
@@ -156,23 +200,37 @@ class sideBarContent extends Component {
                         </Multiselect>
                     </div>
                 </ListGroup.Item> */}
+                <ListGroup.Item variant="info">
+                  <FormCheck 
+                    custom
+                    name='start-end-date'
+                    onChange={selected => this.dateController(selected)}
+                    type='checkbox'
+                    id='start-end-date'
+                    label='Start-End Date'
+                    id='S-T-D'
+                  />
+                </ListGroup.Item>
                 <ListGroup.Item variant='info'>
                   <DatePicker
                       id='start_date'
-                      selected={this.state.start_date}
+                      selected={period.startDate}
                       onChange={this.handleChangeStartDate}
                       dateFormat='yyyy-MM-dd'
                       placeholderText='Start Date'
+                      disabled={period.isRangeDateDisabled}
                       customInput={<CustomStartDateInput/>}
+
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant='info'>
                   <DatePicker
                       id='end_date'
-                      selected={this.state.end_date}
+                      selected={period.endDate}
                       onChange={this.handleChangeEndDate}
                       dateFormat='yyyy-MM-dd'
                       placeholderText='End Date'
+                      disabled={period.isRangeDateDisabled}
                       customInput={<CustomEndDateInput/>}
                       popperModifiers={{
                           offset: {
@@ -180,17 +238,6 @@ class sideBarContent extends Component {
                             offset: "0px, -5px"
                           }
                         }}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item variant="info">
-                  <FormCheck 
-                    custom
-                    name='start-end-date'
-                    onChange={()=>console.log('Form checked')}
-                    type='checkbox'
-                    id='start-end-date'
-                    label='Start-End Date'
-                    id='S-T-D'
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
@@ -213,7 +260,7 @@ class sideBarContent extends Component {
                     }
                   >
                     <Button variant="info" id='Download' block>
-                          Download
+                      Download
                     </Button>
                   </OverlayTrigger>
                 </ListGroup.Item>
