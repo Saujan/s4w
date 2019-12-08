@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputGroup, Button, OverlayTrigger, Tooltip} from 'react-bootstrap';
+import { InputGroup, Button, OverlayTrigger, Tooltip, Spinner} from 'react-bootstrap';
 import { FormCheck, Container, Row, Col , FormControl,ListGroup, ListGroupItem} from 'react-bootstrap';
 import Sidebar from "react-sidebar";
 import Select from 'react-select';
@@ -11,8 +11,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import logo from './logo.png';
 import MultiSelect from "@khanacademy/react-multi-select";
 import './App.css';
+import dateParamCreator from './param_controller'
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-
+const URL = "http://192.168.1.4:5000/";
 const placeholder_project = 'Project'
 const placeholder_sitetype = 'SiteType'
 const placeholder_parameter = 'Parameter'
@@ -93,6 +94,31 @@ class sideBarContent extends Component {
       })
     }
 
+    getData(action_type) {
+      const { project, siteType, parameter, period, spin } = this.state.filterContent
+      const periodParam = dateParamCreator(period)
+      let params = {
+        project: project.selected,
+        sitetype: siteType.selected.value,
+        parameter: parameter.selected,
+        customize_date: periodParam
+      }
+
+      fetch(URL+'api/filter_data', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          'Access-Control-Allow-Origin':'*'
+        }
+      }).then(response => response.json())
+        .then(data => {
+
+        },(error) => {
+        });
+
+    }
+
     render(){
       const CustomStartDateInput = ({ value, onClick}) => (
         <InputGroup onClick={onClick}>
@@ -118,7 +144,11 @@ class sideBarContent extends Component {
               />
           </InputGroup>
       );
-      const { project, siteType, parameter, period } = this.state.filterContent
+      const { project, siteType, parameter, period, spin } = this.state.filterContent
+      const is_parameter_present = siteType.currentSiteType && parameter[siteType.currentSiteType] && true ||  false
+      const spinContainer = spin ?  <Spinner animation="border" role="status">
+                                      <span className="sr-only">Loading...</span>
+                                    </Spinner> : null
       return(
           <div>
               <ListGroup variant="flush info" >
@@ -158,8 +188,8 @@ class sideBarContent extends Component {
                 <ListGroup.Item variant="info">
                   
                   <MultiSelect
-                    options= {siteType.currentSiteType.length && parameter[siteType.currentSiteType].option || []}
-                    selected={siteType.currentSiteType.length && parameter.selected || []}
+                    options= {is_parameter_present && parameter[siteType.currentSiteType].option || []}
+                    selected={is_parameter_present && parameter.selected || []}
                     onSelectedChanged={selected => this.changeHandler('parameter', selected)}
                     disableSearch={true}
                     overrideStrings={{
@@ -167,7 +197,6 @@ class sideBarContent extends Component {
                       selectAll: 'Check All'
                     }}
                   />
-
                 </ListGroup.Item>
                 
                 <ListGroup.Item variant="info">
@@ -179,27 +208,6 @@ class sideBarContent extends Component {
                     isDisabled={!period.isRangeDateDisabled}
                   />
                 </ListGroup.Item>
-                {/* <ListGroup.Item variant='info'>
-                <DropdownButton id="dropdown-basic-button" onChange={this.handleDropdownChangeSingleItem} title={this.state.single_dropdown_content_1} className="Hero" >
-                  <Dropdown.Item href="#/action-1">Single Item</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">Single Item Item</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Single Item Item Item</Dropdown.Item>
-                </DropdownButton>
-                </ListGroup.Item> */}
-                {/* <ListGroup.Item variant='info'>
-                    <div className='bg-primary border border-dark rounded text-white'>
-                        <Multiselect data={data_multi} multiple>
-                            <Button>Hello</Button>
-                        </Multiselect>
-                    </div>
-                </ListGroup.Item>
-                <ListGroup.Item variant='info'>
-                    <div className='bg-light border border-dark rounded'>
-                        <Multiselect data={data_multi}>
-                            <Button>Hello</Button>
-                        </Multiselect>
-                    </div>
-                </ListGroup.Item> */}
                 <ListGroup.Item variant="info">
                   <FormCheck 
                     custom
@@ -241,7 +249,7 @@ class sideBarContent extends Component {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
-                  <Button variant="outline-info" id='Map-View' block>
+                  <Button variant="outline-info" id='Map-View' onClick={()=> this.getData('map')}block>
                         View Map
                   </Button>
                 </ListGroup.Item>
@@ -266,8 +274,9 @@ class sideBarContent extends Component {
                 </ListGroup.Item>
                 
                 <ListGroup.Item variant="info">
-                  
+                  {spinContainer}
                 </ListGroup.Item>
+
               </ListGroup>
           </div>
       );

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 import './App.css';
 import { Navbar, ButtonToolbar, Container, Row, Col , Button,Image} from 'react-bootstrap';
 import Sidebar from "react-sidebar";
@@ -8,6 +9,7 @@ import Multiselect from 'react-bootstrap-multiselect';
 import MapDashboard from './map_dashboard'
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
+const URL = "http://192.168.1.4:5000/";
 
 const sidebarStyles = {
 	
@@ -34,7 +36,7 @@ class App extends Component {
         ],
         //selected: {label: "Precipitation", value: "PT"}
         selected: null,
-        currentSiteType: 'GW'
+        currentSiteType: null
       },
       parameter: {
         'GW': {
@@ -71,9 +73,11 @@ class App extends Component {
         isRangeDateDisabled: true,
         startDate: null,
         endDate: null
-      }
+      },
+      fetchedFilterContent: false,
+      spin: true
     },
-    sidebarOpen: false
+    sidebarOpen: false,
   };
 
 	this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -83,20 +87,43 @@ class App extends Component {
 	this.setState({ sidebarOpen: open });
   }
 
+  componentDidMount() {
+    $.ajax({
+      url: URL+'api/filter_content',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({
+          filterContent: {
+            ...this.state.filterContent,
+            project: data.project,
+            siteType: data.siteType,
+            parameter: data.parameter,
+            fetchedFilterContent: true
+          },
+
+        })
+      }.bind(this),
+      error: function(xhr, status, err) {
+      }.bind(this)
+    });
+
+  }
+
   render(){
     let show_button = this.state.show_button;
-    return(
-          <Sidebar
-            sidebar={<SideBarContent filterContent={this.state.filterContent}/>}
-            open={this.state.sidebarOpen}
-            onSetOpen={this.onSetSidebarOpen}
-            styles={{ sidebar: { background: '#bee5eb' , width:'275px', position:'fixed'} }}
-            pullRight={false}
-          >
-        <MapDashboard controllSidebar = {this.onSetSidebarOpen}/>
-        </Sidebar>
-
-    )
+    return( this.state.filterContent.fetchedFilterContent ?
+          (
+            <Sidebar
+              sidebar={<SideBarContent filterContent={this.state.filterContent}/>}
+              open={this.state.sidebarOpen}
+              onSetOpen={this.onSetSidebarOpen}
+              styles={{ sidebar: { background: '#bee5eb' , width:'275px', position:'fixed'} }}
+              pullRight={false}
+            >
+              <MapDashboard controllSidebar = {this.onSetSidebarOpen}/>
+            </Sidebar>
+          ): null)
   }
 }
 
