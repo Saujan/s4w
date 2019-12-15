@@ -13,7 +13,8 @@ import MultiSelect from "@khanacademy/react-multi-select";
 import './App.css';
 import dateParamCreator  from './param_controller';
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-const URL = "http://192.168.1.2:5000/";
+//const URL = "http://192.168.1.2:5000/";
+const URL = "http://35.193.141.235/";
 const placeholder_project = 'Project'
 const placeholder_sitetype = 'SiteType'
 const placeholder_parameter = 'Parameter'

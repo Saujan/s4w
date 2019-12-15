@@ -10,7 +10,8 @@ import MapDashboard from './map_dashboard'
 import DescriptionModal from './components/descriptionModal';
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
-const URL = "http://192.168.1.2:5000/";
+//const URL = "http://192.168.1.2:5000/";
+const URL = "http://35.193.141.235/";
 
 const sidebarStyles = {
 	
