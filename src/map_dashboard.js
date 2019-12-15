@@ -72,10 +72,10 @@ class MapDashboard extends React.Component {
           google={this.props.google}
           style={mapStyles}
           center={{
-            lat: 40.854885,
-            lng: -88.081807
+            lat: 27.6462,
+            lng: 85.344075
           }}
-          zoom={15}
+          zoom={4}
         >
         {markers}
         </Map>

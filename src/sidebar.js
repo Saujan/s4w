@@ -15,9 +15,9 @@ import dateParamCreator  from './param_controller';
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 //const URL = "http://192.168.1.2:5000/";
 const URL = "http://35.193.141.235/";
-const placeholder_project = 'Project'
+const placeholder_project = 'Project(s)'
 const placeholder_sitetype = 'SiteType'
-const placeholder_parameter = 'Parameter'
+const placeholder_parameter = 'Parameter(s)'
 const placeholder_period = 'Period'
 
 class sideBarContent extends Component {
