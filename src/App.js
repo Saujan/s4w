@@ -7,9 +7,10 @@ import SideBarContent from './sidebar.js';
 import './bootstrap-multiselect.css';
 import Multiselect from 'react-bootstrap-multiselect';
 import MapDashboard from './map_dashboard'
+import DescriptionModal from './components/descriptionModal';
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
-const URL = "http://192.168.1.4:5000/";
+const URL = "http://192.168.1.2:5000/";
 
 const sidebarStyles = {
 	
@@ -75,9 +76,26 @@ class App extends Component {
         endDate: null
       },
       fetchedFilterContent: false,
-      spin: true
+      spin: false
     },
     sidebarOpen: false,
+    mapData: {
+      data: null,
+      monitor_details: null,
+      legend: null,
+      map_center: null
+    },
+    currentView: {
+      map: true,
+      table: false
+    },
+    showModal: {
+      show: false,
+      siteId: null,
+      lat: null,
+      lng: null
+    }
+    
   };
 
 	this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
@@ -110,19 +128,73 @@ class App extends Component {
 
   }
 
+  dataCollector(data, monitors, legend, lat_lon) {
+    console.log('from collector')
+    this.setState({
+      mapData:{
+        data: data,
+        monitor_details: monitors,
+        legend: legend,
+        map_center: lat_lon
+      },
+      filterContent: {
+        ...this.state.filterContent,
+        spin: false
+      }
+    });
+  }
+
+  showDescription(siteId, lat, lng) {
+    this.setState({
+      showModal: {
+        show: true,
+        siteId: siteId,
+        lat: lat,
+        lng: lng
+      }
+    })
+  }
+
+  hideModal() {
+    this.setState({
+      showModal: {
+        ...this.state.showModal,
+        show: false
+      }
+    })
+  }
+  
+
   render(){
     let show_button = this.state.show_button;
+    let mapDetail = this.state.currentView.map ? <MapDashboard  controllSidebar={this.onSetSidebarOpen} data={this.state.mapData.data} showDescription={this.showDescription.bind(this)} legend = {this.state.mapData.legend} map_center = {this.state.mapData.map_center}/> : ''
+    let descriptionModal = this.state.showModal.show ? 
+      <DescriptionModal 
+          data={this.state.mapData.data} 
+          siteId= {this.state.showModal.siteId} 
+          hideModal={this.hideModal.bind(this)} 
+          monitors = {this.state.mapData.monitor_details} 
+          lat = {this.state.showModal.lat} 
+          lng = {this.state.showModal.lng}
+      /> 
+      : ""
+    console.log('From Parent=> '+ this.state.filterContent.spin)
     return( this.state.filterContent.fetchedFilterContent ?
-          (
+          (<div>
             <Sidebar
-              sidebar={<SideBarContent filterContent={this.state.filterContent}/>}
+              sidebar={<SideBarContent filterContent={this.state.filterContent} dataCollector ={this.dataCollector.bind(this)}/>}
               open={this.state.sidebarOpen}
               onSetOpen={this.onSetSidebarOpen}
               styles={{ sidebar: { background: '#bee5eb' , width:'275px', position:'fixed'} }}
               pullRight={false}
             >
-              <MapDashboard controllSidebar = {this.onSetSidebarOpen}/>
+              { mapDetail }
+              {descriptionModal}
             </Sidebar>
+                
+              
+              
+            </div>
           ): null)
   }
 }

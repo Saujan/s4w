@@ -12,6 +12,7 @@ function processDate(period) {
 
     return {range: true, start_date: start_date, end_date: end_date }
 }
+
 export function dateParamCreator(period) {
   return processDate(period)
 }

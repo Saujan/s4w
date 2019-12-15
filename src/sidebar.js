@@ -11,9 +11,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import logo from './logo.png';
 import MultiSelect from "@khanacademy/react-multi-select";
 import './App.css';
-import dateParamCreator from './param_controller'
+import dateParamCreator  from './param_controller';
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-const URL = "http://192.168.1.4:5000/";
+const URL = "http://192.168.1.2:5000/";
 const placeholder_project = 'Project'
 const placeholder_sitetype = 'SiteType'
 const placeholder_parameter = 'Parameter'
@@ -94,6 +94,34 @@ class sideBarContent extends Component {
       })
     }
 
+    toggleSpin() {
+      let{ spin } = this.state.filterContent
+      this.setState({
+        filterContent:{
+          ...this.state.filterContent,
+          spin: !spin
+        }
+      })
+    }
+
+    checkPresenceOfData() {
+      const { project, siteType, parameter, period, spin } = this.state.filterContent
+      debugger
+      if (project.selected.lenth < 1 || parameter.selected < 1){
+        return false
+      }
+      return true
+    }
+
+    grabData(action_type) {
+      if (this.checkPresenceOfData()){
+        this.getData(action_type)
+      }
+      else {
+        alert('Select the fields.');
+      }
+    }
+
     getData(action_type) {
       const { project, siteType, parameter, period, spin } = this.state.filterContent
       const periodParam = dateParamCreator(period)
@@ -104,6 +132,8 @@ class sideBarContent extends Component {
         customize_date: periodParam
       }
 
+      this.toggleSpin()
+
       fetch(URL+'api/filter_data', {
         method: 'POST',
         body: JSON.stringify(params),
@@ -113,7 +143,14 @@ class sideBarContent extends Component {
         }
       }).then(response => response.json())
         .then(data => {
-
+          if (data['legend'].length > 0) {
+            this.toggleSpin()
+            this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
+            //successfull loaded notification
+          }
+          else {
+            //MyNotification('success', 'No data');
+          }
         },(error) => {
         });
 
@@ -202,7 +239,7 @@ class sideBarContent extends Component {
                 <ListGroup.Item variant="info">
                   <Select
                     value={period.selected}
-                    onChange={selected => this.changeHandler( 'period', selected)}
+                    onChange={(selected) => this.changeHandler( 'period', selected)}
                     options={period.option}
                     placeholder={placeholder_period}
                     isDisabled={!period.isRangeDateDisabled}
@@ -212,7 +249,7 @@ class sideBarContent extends Component {
                   <FormCheck 
                     custom
                     name='start-end-date'
-                    onChange={selected => this.dateController(selected)}
+                    onChange={(selected) => this.dateController(selected)}
                     type='checkbox'
                     id='start-end-date'
                     label='Start-End Date'
@@ -249,7 +286,7 @@ class sideBarContent extends Component {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
-                  <Button variant="outline-info" id='Map-View' onClick={()=> this.getData('map')}block>
+                  <Button variant="outline-info" id='Map-View' onClick={()=> this.grabData('map')}block>
                         View Map
                   </Button>
                 </ListGroup.Item>
