@@ -1,11 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//import { Modal, Button } from 'antd';
 import { Button, Modal, Tabs, Tab } from 'react-bootstrap';
-//import { Tabs } from 'antd';
 import GraphP from './graphPlot';
 import SingleGroupTable from './SingleGroupTable';
-//import { Table, Divider, Tag } from 'antd';
 
 //const { TabPane } = Tabs;
 const SiteId = "_id.siteid";
@@ -47,7 +44,7 @@ class DescriptionModal extends React.Component {
             {chart_tab}
           </Tab>
           <Tab eventKey="table" title="Table">
-            Table data
+            <SingleGroupTable data = {this.props.data} siteid = {siteid} monitors = {monitors}/>
           </Tab>
         </Tabs>
         </Modal.Body>

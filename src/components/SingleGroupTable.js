@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'antd/dist/antd.css';
 import { Table, Divider, Tag } from 'antd';
 
 const precip = "precip_mm";
@@ -11,6 +12,7 @@ const precip_cmnts = "precip_cmnts";
 
 const columns_headers = [MonID, meta_instance_ids, precip, precip_image, precip_cmnts, msmt_datetime];
 const links = [precip_image];
+
 function createData(data, siteid, monitors){
     var a_row = {};
     return data[meta_instance_ids][siteid].map(function(meta_instance_id, index)
