@@ -17,6 +17,9 @@ function createLegend(legends){
               <div className='range-div'><strong>{legend['range']}</strong>
               </div>
             </td>
+            <td>
+              <strong>mm</strong>
+            </td>
           </tr>
         )
       });
