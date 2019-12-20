@@ -186,7 +186,7 @@ class App extends Component {
               sidebar={<SideBarContent filterContent={this.state.filterContent} dataCollector ={this.dataCollector.bind(this)}/>}
               open={this.state.sidebarOpen}
               onSetOpen={this.onSetSidebarOpen}
-              styles={{ sidebar: { background: '#bee5eb' , width:'275px', position:'fixed'} }}
+              styles={{ sidebar: { background: '#d3d3d3' , width:'275px', position:'fixed'} }}
               pullRight={false}
             >
               { mapDetail }
