@@ -151,14 +151,13 @@ class sideBarContent extends Component {
           if (data['legend'].length > 0) {
             this.toggleSpin()
             this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
-            ToastNotification('Hello from success load');
-            console.log('data suceess')
+            ToastNotification('success',<strong>Data Loaded Successfully !</strong>); //change message accordingly
           }
           else {
-            console.log('data fail')
+            ToastNotification('info',<strong>Data Load Failed</strong>); //change message accordingly
           }
         },(error) => {
-          ToastNotification('Hello from Error load');
+          ToastNotification('error',<strong>Error in Data Loading</strong>); //change message accordingly
         });
 
     }
@@ -303,18 +302,9 @@ class sideBarContent extends Component {
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
-                  <OverlayTrigger
-                    placement="right"
-                    overlay={
-                      <Tooltip>
-                        Hello
-                      </Tooltip>
-                    }
-                  >
                     <Button variant="info" id='Download' block>
                       Download
                     </Button>
-                  </OverlayTrigger>
                 </ListGroup.Item>
                 
                 <ListGroup.Item variant="info">

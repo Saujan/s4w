@@ -85,9 +85,18 @@
   padding : .5rem 1.25rem;
 }
 
-.styled-toast-success {
+.styled-toast {
   border-radius: 10px !important;
-  background-color: #17a2b8  !important;
+  /* background-color: #17a2b8  !important; */
   color: white !important;
   font-family: inherit !important;
+  text-align: center;
+}
+
+.styled-toast-default {
+  border-radius: 10px !important;
+  /* background-color: #17a2b8  !important; */
+  color: black !important;
+  font-family: inherit !important;
+  text-align: center;
 }
