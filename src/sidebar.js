@@ -278,37 +278,28 @@ class sideBarContent extends Component {
                       placeholderText='End Date'
                       disabled={period.isRangeDateDisabled}
                       customInput={<CustomEndDateInput/>}
-                      popperModifiers={{
-                          offset: {
-                            enabled: true,
-                            offset: "0px, -5px"
-                          }
-                        }}
+                      // popperModifiers={{
+                      //     offset: {
+                      //       enabled: true,
+                      //       offset: "0px, -5px"
+                      //     }
+                      //   }}
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
-                  <Button variant="outline-info" id='Map-View' onClick={()=> this.grabData('map')}block>
+                  <Button variant="outline-info" size="sm" id='Map-View' onClick={()=> this.grabData('map')}block>
                         View Map
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
-                  <Button variant="outline-info" id='Taple-View' block>
+                  <Button variant="outline-info" size="sm" id='Taple-View' block>
                         View Table
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item variant="info">
-                  <OverlayTrigger
-                    placement="right"
-                    overlay={
-                      <Tooltip>
-                        Hello
-                      </Tooltip>
-                    }
-                  >
-                    <Button variant="info" id='Download' block>
+                    <Button variant="info" size="sm" id='Download' block>
                       Download
                     </Button>
-                  </OverlayTrigger>
                 </ListGroup.Item>
                 
                 <ListGroup.Item variant="info">
