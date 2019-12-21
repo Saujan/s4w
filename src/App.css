@@ -84,3 +84,10 @@
 .list-group-item.list-group-item-info {
   padding : .5rem 1.25rem;
 }
+
+.styled-toast-success {
+  border-radius: 10px !important;
+  background-color: #17a2b8  !important;
+  color: white !important;
+  font-family: inherit !important;
+}
