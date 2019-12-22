@@ -151,13 +151,13 @@ class sideBarContent extends Component {
           if (data['legend'].length > 0) {
             this.toggleSpin()
             this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
-            ToastNotification('success',<strong>Data Loaded Successfully !</strong>); //change message accordingly
+            ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
           }
           else {
-            ToastNotification('info',<strong>Data Load Failed</strong>); //change message accordingly
+            ToastNotification('info',<strong>Empty Data.</strong>);
           }
         },(error) => {
-          ToastNotification('error',<strong>Error in Data Loading</strong>); //change message accordingly
+          ToastNotification('error',<strong>Error in Data Loading</strong>);
         });
 
     }
