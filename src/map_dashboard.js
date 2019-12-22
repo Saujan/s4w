@@ -3,6 +3,9 @@ import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { Button, Modal } from 'react-bootstrap';
 import './css/map/mapDesign.scss'
 import './css/map/mixin.scss'
+import './bootstrap.min.css'
+import './App.css'
+import MapLegend from './legend.js'
 
 const SiteId = "_id.siteid";
 const SiteName = "SiteName";
@@ -68,21 +71,28 @@ class MapDashboard extends React.Component {
     const markers = this.props.data && true ? this.markerFactory() : null;
     return (
       <div>
-      <Map
-          google={this.props.google}
-          style={mapStyles}
-          center={{
-            lat: 27.6462,
-            lng: 85.344075
-          }}
-          zoom={4}
-        >
-        {markers}
+        <Map
+            google={this.props.google}
+            style={mapStyles}
+            center={{
+              lat: 27.6462,
+              lng: 85.344075
+            }}
+            zoom={4}
+          >
+          {markers}
         </Map>
+
+        {/* div component for legend starts */}
+        <div className='legend-right'>
+          <MapLegend legend={this.props.legend}/>
+        </div>
+        {/* div component for legend ends */}
+
         <div className="filter_button_containter">
-            <Button onClick={this.controlSidebar}>Filter Portion</Button>
+          <Button onClick={this.controlSidebar}>Filter Portion</Button>
         </div>
-        </div>
+      </div>
     );
   }
 }

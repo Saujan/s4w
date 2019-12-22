@@ -83,4 +83,53 @@
 
 .list-group-item.list-group-item-info {
   padding : .5rem 1.25rem;
+  /* background-color: #BEBBB1; */
+  /* background-color: #b2b2b2; */
+  /* background-color: #e9ebee; */
+  background-color: #d3d3d3;
+}
+
+.legend-right {
+  top: 60px;
+  right: 10px;
+  float: right;
+  position: relative;
+  /* z-index: 1000003; */
+  /* padding: 5px; */
+  /* border: 2px; */
+  /* background-color: burlywood; */
+  /* opacity: 50%; */
+}
+
+table tr td {
+  vertical-align: inherit !important;
+  font-size: 12px;
+}
+
+.table.table-light.table-bordered {
+  line-height: 1em;
+  background-color: white;
+  border: 2px solid black;
+  opacity: 70%;
+  padding: 0em;
+  vertical-align: inherit;
+}
+
+.circle-div {
+  /* background-color: red; */
+  border-radius: 5px;
+  width: 10px;
+  height: 10px;
+  vertical-align: inherit;
+}
+
+.range-div {
+  width : 70px;
+}
+
+.styled-toast-success {
+  border-radius: 10px !important;
+  background-color: #17a2b8  !important;
+  color: white !important;
+  font-family: inherit !important;
 }

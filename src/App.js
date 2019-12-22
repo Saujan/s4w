@@ -168,7 +168,15 @@ class App extends Component {
 
   render(){
     let show_button = this.state.show_button;
-    let mapDetail = this.state.currentView.map ? <MapDashboard  controllSidebar={this.onSetSidebarOpen} data={this.state.mapData.data} showDescription={this.showDescription.bind(this)} legend = {this.state.mapData.legend} map_center = {this.state.mapData.map_center}/> : ''
+    let mapDetail = this.state.currentView.map ? 
+                      <MapDashboard  
+                        controllSidebar={this.onSetSidebarOpen} 
+                        data={this.state.mapData.data} 
+                        showDescription={this.showDescription.bind(this)} 
+                        legend = {this.state.mapData.legend} 
+                        map_center = {this.state.mapData.map_center}
+                      /> 
+                        : ''
     let descriptionModal = this.state.showModal.show ? 
       <DescriptionModal 
           data={this.state.mapData.data} 
@@ -186,8 +194,7 @@ class App extends Component {
               sidebar={<SideBarContent filterContent={this.state.filterContent} dataCollector ={this.dataCollector.bind(this)}/>}
               open={this.state.sidebarOpen}
               onSetOpen={this.onSetSidebarOpen}
-              styles={{ sidebar: { background: '#bee5eb' , width:'275px', position:'fixed'} }}
-              pullRight={false}
+              styles={{ sidebar: { background: '#d3d3d3' , width:'275px', position:'fixed'} }}
             >
               { mapDetail }
               {descriptionModal}
