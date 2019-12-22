@@ -148,8 +148,8 @@ class sideBarContent extends Component {
         }
       }).then(response => response.json())
         .then(data => {
+          this.toggleSpin()
           if (data['legend'].length > 0) {
-            this.toggleSpin()
             this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
             ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
           }
@@ -157,6 +157,7 @@ class sideBarContent extends Component {
             ToastNotification('info',<strong>Empty Data.</strong>);
           }
         },(error) => {
+          this.toggleSpin()
           ToastNotification('error',<strong>Error in Data Loading</strong>);
         });
 
