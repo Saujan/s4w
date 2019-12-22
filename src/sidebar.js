@@ -283,23 +283,23 @@ class sideBarContent extends Component {
                       //   }}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                   <Button variant="outline-info" size="sm" id='Map-View' onClick={()=> this.grabData('map')}block>
                         View Map
                   </Button>
                 </ListGroup.Item>
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                   <Button variant="outline-info" size="sm" id='Taple-View' block>
                         View Table
                   </Button>
                 </ListGroup.Item>
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                     <Button variant="info" size="sm" id='Download' block>
                       Download
                     </Button>
                 </ListGroup.Item>
                 
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                   {spinContainer}
                 </ListGroup.Item>
 
