@@ -195,19 +195,11 @@ class sideBarContent extends Component {
                                     </Spinner> : null
       return(
           <div>
-              <ListGroup variant="flush info" >
-                <ListGroup.Item variant='info'>
+              <ListGroup variant="flush dark" >
+                <ListGroup.Item variant='dark'>
                   <img src={logo} width='100%' height='100%'/>
                 </ListGroup.Item>
-                <ListGroup.Item variant='info'>
-                  <OverlayTrigger
-                    placement="bottom"
-                    overlay={
-                      <Tooltip id='MultiSelect'>
-                        Information
-                      </Tooltip>
-                    }
-                  >
+                <ListGroup.Item variant='dark'>
                     <MultiSelect
                       options= {project.option}
                       selected={project.selected}
@@ -218,9 +210,8 @@ class sideBarContent extends Component {
                         selectAll: 'Check All'
                       }}
                     />
-                  </OverlayTrigger>
                 </ListGroup.Item>
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                   <Select
                     value={siteType.selected}
                     onChange={selected => this.changeHandler( 'siteType', selected)}
@@ -229,7 +220,7 @@ class sideBarContent extends Component {
                   />
                 </ListGroup.Item>
                 
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                   
                   <MultiSelect
                     options= {is_parameter_present && parameter[siteType.currentSiteType].option || []}
@@ -243,7 +234,7 @@ class sideBarContent extends Component {
                   />
                 </ListGroup.Item>
                 
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                   <Select
                     value={period.selected}
                     onChange={(selected) => this.changeHandler( 'period', selected)}
@@ -252,7 +243,7 @@ class sideBarContent extends Component {
                     isDisabled={!period.isRangeDateDisabled}
                   />
                 </ListGroup.Item>
-                <ListGroup.Item variant="info">
+                <ListGroup.Item variant="dark">
                   <FormCheck 
                     custom
                     name='start-end-date'
@@ -263,7 +254,7 @@ class sideBarContent extends Component {
                     id='S-T-D'
                   />
                 </ListGroup.Item>
-                <ListGroup.Item variant='info'>
+                <ListGroup.Item variant='dark'>
                   <DatePicker
                       id='start_date'
                       selected={period.startDate}
@@ -275,7 +266,7 @@ class sideBarContent extends Component {
 
                   />
                 </ListGroup.Item>
-                <ListGroup.Item variant='info'>
+                <ListGroup.Item variant='dark'>
                   <DatePicker
                       id='end_date'
                       selected={period.endDate}

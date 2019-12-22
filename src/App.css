@@ -81,7 +81,7 @@
   visibility: hidden;
 }
 
-.list-group-item.list-group-item-info {
+.list-group-item.list-group-item-dark {
   padding : .5rem 1.25rem;
   /* background-color: #BEBBB1; */
   /* background-color: #b2b2b2; */
@@ -148,4 +148,28 @@ table tr td {
   color: black !important;
   font-family: inherit !important;
   text-align: center;
+
+}
+.menu-left-button {
+  top: 10px;
+  left: 182px;
+  float: left;
+  position: relative;
+}
+
+#open-sidebar {
+  width: 40px;
+  height : 40px;
+  background-color: white;
+  text-align: center;
+  color: black;
+  cursor: pointer;
+  vertical-align: middle;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  background-clip: padding-box;
+  padding-top: 3px;
+}
+
+#open-sidebar:hover {
+  background-color: #dee1ea;
 }

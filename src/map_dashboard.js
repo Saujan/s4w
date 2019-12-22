@@ -1,11 +1,13 @@
 import React from 'react'
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { Button, Modal } from 'react-bootstrap';
+
 import './css/map/mapDesign.scss'
 import './css/map/mixin.scss'
 import './bootstrap.min.css'
 import './App.css'
 import MapLegend from './legend.js'
+import { MdMenu } from 'react-icons/md';
 
 const SiteId = "_id.siteid";
 const SiteName = "SiteName";
@@ -89,8 +91,10 @@ class MapDashboard extends React.Component {
         </div>
         {/* div component for legend ends */}
 
-        <div className="filter_button_containter">
-          <Button onClick={this.controlSidebar}>Filter Portion</Button>
+        <div className='menu-left-button'>
+          <div id='open-sidebar' onClick={this.controlSidebar}>
+            <MdMenu size='2.25em'/>
+          </div>
         </div>
       </div>
     );

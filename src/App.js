@@ -198,11 +198,8 @@ class App extends Component {
             >
               { mapDetail }
               {descriptionModal}
-            </Sidebar>
-                
-              
-              
-            </div>
+            </Sidebar>  
+           </div>
           ): null)
   }
 }
