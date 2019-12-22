@@ -1,8 +1,10 @@
 import React from 'react'
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import { Button, Modal } from 'react-bootstrap';
-import './css/map/mapDesign.scss'
-import './css/map/mixin.scss'
+import './css/map/mapDesign.scss';
+import './css/map/mixin.scss';
+import './App.css';
+import { MdMenu } from 'react-icons/md';
 
 const SiteId = "_id.siteid";
 const SiteName = "SiteName";
@@ -68,7 +70,7 @@ class MapDashboard extends React.Component {
     const markers = this.props.data && true ? this.markerFactory() : null;
     return (
       <div>
-      <Map
+        <Map
           google={this.props.google}
           style={mapStyles}
           center={{
@@ -79,10 +81,12 @@ class MapDashboard extends React.Component {
         >
         {markers}
         </Map>
-        <div className="filter_button_containter">
-            <Button onClick={this.controlSidebar}>Filter Portion</Button>
+        <div className='menu-left-button'>
+          <div id='open-sidebar' onClick={this.controlSidebar}>
+            <MdMenu size='2.25em'/>
+          </div>
         </div>
-        </div>
+      </div>
     );
   }
 }
