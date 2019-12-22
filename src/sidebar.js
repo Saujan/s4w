@@ -12,6 +12,10 @@ import logo from './logo.png';
 import MultiSelect from "@khanacademy/react-multi-select";
 import './App.css';
 import dateParamCreator  from './param_controller';
+import {toast} from 'react-toastify';
+import {ToastNotification} from './components/ToastNotification.js';
+
+toast.configure();
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 //const URL = "http://192.168.1.2:5000/";
 const URL = "http://35.193.141.235/";
@@ -147,12 +151,13 @@ class sideBarContent extends Component {
           if (data['legend'].length > 0) {
             this.toggleSpin()
             this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
-            //successfull loaded notification
+            ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
           }
           else {
-            //MyNotification('success', 'No data');
+            ToastNotification('info',<strong>Empty Data.</strong>);
           }
         },(error) => {
+          ToastNotification('error',<strong>Error in Data Loading</strong>);
         });
 
     }

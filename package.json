@@ -21,6 +21,7 @@
     "react-select": "^3.0.8",
     "react-select-box": "^3.0.1",
     "react-sidebar": "^3.0.2",
+    "react-toastify": "^5.4.1",
     "styled-components": "^4.4.1"
   },
   "scripts": {
