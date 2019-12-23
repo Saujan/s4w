@@ -172,3 +172,12 @@ table tr td {
 #open-sidebar:hover {
   background-color: #dee1ea;
 }
+
+.center-spinner {
+  text-align: center;
+}
+
+.bubble-loading {
+  /* display: inline-block; */
+  margin: 0 auto;
+}

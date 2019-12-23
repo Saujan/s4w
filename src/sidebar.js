@@ -14,6 +14,7 @@ import './App.css';
 import dateParamCreator  from './param_controller';
 import {toast} from 'react-toastify';
 import {ToastNotification} from './components/ToastNotification.js';
+import ReactLoading from 'react-loading';
 
 toast.configure();
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -190,9 +191,14 @@ class sideBarContent extends Component {
       );
       const { project, siteType, parameter, period, spin } = this.state.filterContent
       const is_parameter_present = siteType.currentSiteType && parameter[siteType.currentSiteType] && true ||  false
-      const spinContainer = spin ?  <Spinner animation="border" role="status">
-                                      <span className="sr-only">Loading...</span>
-                                    </Spinner> : null
+      // const spinContainer = spin ?  <Spinner animation="border" role="status">
+      //                                 <span className="sr-only">Loading...</span>
+      //                               </Spinner> : null
+      const spinContainer = spin 
+                            ? 
+                            <ReactLoading type={'bars'} color={'black'} height={'20%'} width={'20%'} className='bubble-loading'/> 
+                            : 
+                            null
       return(
           <div>
               <ListGroup variant="flush dark" >
@@ -299,7 +305,7 @@ class sideBarContent extends Component {
                     </Button>
                 </ListGroup.Item>
                 
-                <ListGroup.Item variant="dark">
+                <ListGroup.Item variant="dark" className="center-spinner">
                   {spinContainer}
                 </ListGroup.Item>
 
