@@ -8,8 +8,7 @@ function processDate(period) {
     start_date = startDate[2]+'-'+startDate[0]+'-'+startDate[1]
 
     endDate = period.endDate.toLocaleString().split(',')[0].split('/')
-    end_date = endDate[2]+'-'+endDate[0]+'-'+endDate[1]
-
+    end_date = endDate[2]+'-'+endDate[0]+'-'+(Number(endDate[1]) + 1).toString()
     return {range: true, start_date: start_date, end_date: end_date }
 }
 
