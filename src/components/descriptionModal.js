@@ -52,9 +52,6 @@ class DescriptionModal extends React.Component {
           <Button variant="secondary" onClick={this.props.hideModal}>
             Close
           </Button>
-          <Button variant="primary" onClick={this.props.hideModal}>
-            Save Changes
-          </Button>
         </Modal.Footer>
       </Modal>
     )  

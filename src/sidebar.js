@@ -300,7 +300,7 @@ class sideBarContent extends Component {
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
-                    <Button variant="dark" size="sm" id='Download' block>
+                    <Button variant="outline-dark" size="sm" id='Download' block>
                       Download
                     </Button>
                 </ListGroup.Item>
