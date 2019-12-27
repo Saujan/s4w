@@ -33,6 +33,10 @@ class sideBarContent extends Component {
         };
     }
 
+    componentDidMount(){
+      this.grabData('map')
+    }
+
     handleChangeStartDate = date => {
       this.setState({
         filterContent: {
@@ -112,7 +116,6 @@ class sideBarContent extends Component {
 
     checkPresenceOfData() {
       const { project, siteType, parameter, period, spin } = this.state.filterContent
-      debugger
       if (project.selected.lenth < 1 || parameter.selected < 1){
         return false
       }

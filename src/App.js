@@ -70,8 +70,8 @@ class App extends Component {
           {'value':'last_30_days', 'label':'Last 30 Days'},
           {'value':'last_365_days', 'label':'Last Year'}
         ],
-        //selected: {'value':'today', 'label':'Today'}
-        selected: null,
+        selected: {'value':'today', 'label':'Today'},
+        //selected: null,
         isRangeDateDisabled: true,
         startDate: null,
         endDate: null
@@ -79,7 +79,7 @@ class App extends Component {
       fetchedFilterContent: false,
       spin: false
     },
-    sidebarOpen: false,
+    sidebarOpen: true,
     mapData: {
       data: null,
       monitor_details: null,
