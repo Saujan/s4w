@@ -104,6 +104,15 @@ class sideBarContent extends Component {
       })
     }
 
+    qualityMetricController(e) {
+      this.setState({
+        filterContent: {
+          ...this.state.filterContent,
+          enable_quality_metric: e.target.checked
+        }
+      })
+    }
+
     toggleSpin() {
       let{ spin } = this.state.filterContent
       this.setState({
@@ -132,15 +141,15 @@ class sideBarContent extends Component {
     }
 
     getData(action_type) {
-      const { project, siteType, parameter, period, spin } = this.state.filterContent
+      const { project, siteType, parameter, period, spin, enableQualityMetric } = this.state.filterContent
       const periodParam = dateParamCreator(period)
       let params = {
         project: project.selected,
         sitetype: siteType.selected.value,
         parameter: parameter.selected,
-        customize_date: periodParam
+        customize_date: periodParam,
+        enable_quality_metric: enableQualityMetric
       }
-
       this.toggleSpin()
 
       fetch(URL+'api/filter_data', {
@@ -261,6 +270,16 @@ class sideBarContent extends Component {
                     id='start-end-date'
                     label='Start-End Date'
                     id='S-T-D'
+                  />
+                </ListGroup.Item>
+                <ListGroup.Item variant="dark">
+                  <FormCheck
+                    custom
+                    name='start-end-date'
+                    onChange={(selected) => this.qualityMetricController(selected)}
+                    type='checkbox'
+                    id='quality_metric'
+                    label='Enable Quality Metric'
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant='dark'>
