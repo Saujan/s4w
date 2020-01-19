@@ -29,20 +29,20 @@ class DescriptionModal extends React.Component {
     const data = JSON.parse(this.props.data);
     const siteid = this.props.siteId;
     const monitors = this.props.monitors;
-     const chart_tab = data[precip][siteid].length > 1 ? 
-      <GraphP data={this.props.data} siteid={siteid}/>
+    const chart_tab = data[precip][siteid].length > 1 ?
+      <Tab eventKey="graph" title="Chart">
+        <GraphP data={this.props.data} siteid={siteid}/>
+      </Tab>
       : ''
-    //const active_tab = chart_tab == '' ? '2' : '1'
+    const active_tab = chart_tab != '' ? 'graph' : 'table'
     return (
       <Modal size='lg' show={true} onHide={this.props.hideModal} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>{'SiteName: '+data[SiteName][siteid] }</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <Tabs defaultActiveKey="graph" id="uncontrolled-tab-example">
-          <Tab eventKey="graph" title="Chart">
-            {chart_tab}
-          </Tab>
+        <Tabs defaultActiveKey={active_tab} id="uncontrolled-tab-example">
+          {chart_tab}
           <Tab eventKey="table" title="Table">
             <SingleGroupTable data = {this.props.data} siteid = {siteid} monitors = {monitors}/>
           </Tab>
