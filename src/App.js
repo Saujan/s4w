@@ -8,9 +8,10 @@ import './bootstrap-multiselect.css';
 import Multiselect from 'react-bootstrap-multiselect';
 import MapDashboard from './map_dashboard'
 import DescriptionModal from './components/descriptionModal';
+import HotApp from './components/TableDashboard'
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
-//const URL = "http://192.168.1.2:5000/";
+//const URL = "http://192.168.1.8:5000/";
 const URL = "http://35.193.141.235/";
 
 const sidebarStyles = {
@@ -169,15 +170,16 @@ class App extends Component {
 
   render(){
     let show_button = this.state.show_button;
-    let mapDetail = this.state.currentView.map ? 
-                      <MapDashboard  
-                        controllSidebar={this.onSetSidebarOpen} 
-                        data={this.state.mapData.data} 
-                        showDescription={this.showDescription.bind(this)} 
-                        legend = {this.state.mapData.legend} 
-                        map_center = {this.state.mapData.map_center}
-                      /> 
-                        : ''
+    // let mapDetail = this.state.currentView.map ? 
+    //                   <MapDashboard  
+    //                     controllSidebar={this.onSetSidebarOpen} 
+    //                     data={this.state.mapData.data} 
+    //                     showDescription={this.showDescription.bind(this)} 
+    //                     legend = {this.state.mapData.legend} 
+    //                     map_center = {this.state.mapData.map_center}
+    //                   /> 
+    //                     : ''
+    let mapDetail = <HotApp />
     let descriptionModal = this.state.showModal.show ? 
       <DescriptionModal 
           data={this.state.mapData.data} 

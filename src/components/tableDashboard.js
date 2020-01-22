@@ -1,77 +1,45 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Table, Divider, Tag } from 'antd';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { HotTable } from '@handsontable/react';
+import 'handsontable/dist/handsontable.full.css';
 
-const { Column, ColumnGroup } = Table;
-
-class TableDashboard extends React.Component {
-  constructor(props){
-    super(props)
+class HotApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handsontableData = [
+{Name:"Многоэтажный жилой дом №4-И в квартале  15 микрорайона г. Нижневартовска", Code: 123, RefBeginDate:"20060001",RefEndDate:"20120001",RefPart:"1",RefStatus:"1",RefTerritory:"58162"},
+{Name:"Многоэтажный жилой дом №4-И в квартале  15 микрорайона г. Новоаганск", Code: 124, RefBeginDate:"20060001",RefEndDate:"20120001",RefPart:"1",RefStatus:"2",RefTerritory:"58162"},
+{Name:"Многоэтажный жилой дом №4-И в квартале  15 микрорайона г. Радужный", Code: 125, RefBeginDate:"20060001",RefEndDate:"20120001",RefPart:"1",RefStatus:"3",RefTerritory:"58162"},
+{Name:"Многоэтажный жилой дом №4-И в квартале  15 микрорайона г. Сургут", Code: 126, RefBeginDate:"20060001",RefEndDate:"20120001",RefPart:"1",RefStatus:"2",RefTerritory:"58162"},
+    ];
   }
-    render() {
-        
-const data = [
-  {
-    key: '1',
-    firstName: 'John',
-    lastName: 'Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    firstName: 'Jim',
-    lastName: 'Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-    return (
-        <Table dataSource={data}>
-    <ColumnGroup title="Name">
-      <Column title="First Name" dataIndex="firstName" key="firstName" />
-      <Column title="Last Name" dataIndex="lastName" key="lastName" />
-    </ColumnGroup>
-    <Column title="Age" dataIndex="age" key="age" />
-    <Column title="Address" dataIndex="address" key="address" />
-    <Column
-      title="Tags"
-      dataIndex="tags"
-      key="tags"
-      render={tags => (
-        <span>
-          {tags.map(tag => (
-            <Tag color="blue" key={tag}>
-              {tag}
-            </Tag>
-          ))}
-        </span>
-      )}
-    />
-    <Column
-      title="Action"
-      key="action"
-      render={(text, record) => (
-        <span>
-          <a href="javascript:;">Invite {record.lastName}</a>
-          <Divider type="vertical" />
-          <a href="javascript:;">Delete</a>
-        </span>
-      )}
-    />
-  </Table>
-    );
-  }  
 
+  render() {
+    return (<HotTable settings={{ 
+        dataSchema: {RefStatus: null, Code: null, Name: null, RefTerritory: null, RefBeginDate: null, RefEndDate: null},
+        data: this.handsontableData,
+        stretchH: "all",
+        allowEmpty: true,
+        fillHandle: false,
+        columns: [
+          {data: 'RefStatus', editor: false, renderer: this.statusRenderer, type: 'numeric',}, 
+          {data: 'Code', editor: false, type: 'numeric',}, 
+          {data: 'Name', editor: false, renderer: this.linkRenderer, type: 'text',}, 
+          {data: 'RefTerritory', editor: false, type: 'numeric',}, 
+          {data: 'RefBeginDate', editor: false, renderer: this.dateRenderer, type: 'text',}, 
+          {data: 'RefEndDate', editor: false, renderer: this.dateRenderer, type: 'text',}
+        ],
+        colHeaders: ['Status', 'Code', 'Project Name', 'Realization place', 'Year start', 'Year end'],
+        colWidths: [40, 60, 300, 120, 80, 80],
+        // Sorting
+        columnSorting: true,
+        sortIndicator: true,
+        // Filters
+        filters: true,
+        dropdownMenu: true
+      }} />
+    );
+  }
 }
-export default TableDashboard;
+
+export default HotApp;
