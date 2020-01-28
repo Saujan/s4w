@@ -41,17 +41,31 @@ class MapDashboard extends React.Component {
     return values[siteid].reduce((accumulator, currentValue) => accumulator + parseFloat(currentValue))
   }
 
+  configIconPin(met_metric, color) {
+    let icon_pin = {}
+    icon_pin['fillColor'] = color
+    if (met_metric) {
+      icon_pin['path'] = 'M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z'
+      icon_pin['fillOpacity'] = 1
+      icon_pin['scale'] = 0.025
+    } else {
+      icon_pin['path'] = 'M 100 100 L 300 100 L 200 300 z'
+      icon_pin['fillColor'] = color
+      icon_pin['fillOpacity'] = 1
+      icon_pin['scale'] = 0.07
+    }
+    return icon_pin
+  }
+
   markerFactory(){
+    let iconPin = ''
+    let parameter_sum = 0
     const gps = this.props.data.trim()!="" ? JSON.parse(this.props.data) : "";
     if (gps != "") {
-      return Object.keys(gps[SiteId]).map(function(site_key){
-        const iconPin = {
-          path: 'M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z',
-          fillColor: gps[CategoryColor][site_key],
-          fillOpacity: 1,
-          scale: 0.02, //to reduce the size of icons
-        };
-        var parameter_sum = this.parameterAccumulator(gps[precip], site_key);
+      return Object.keys(gps[SiteId])
+              .map(function(site_key){
+        iconPin = this.configIconPin(gps['met_metric'][site_key], gps[CategoryColor][site_key])
+        parameter_sum = this.parameterAccumulator(gps[precip], site_key)
         return (
             <Marker onClick = {(e) => {this.props.showDescription(site_key, gps[SiteLat][site_key], gps[SiteLong][site_key]);}}
             //title={gps[SiteName][site_key] + parameter_sum}

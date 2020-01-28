@@ -78,7 +78,7 @@ class App extends Component {
       },
       fetchedFilterContent: false,
       spin: false,
-      enable_quality_metric: false
+      show_partial_records: false
     },
     sidebarOpen: true,
     mapData: {
