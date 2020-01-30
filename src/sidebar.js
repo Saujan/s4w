@@ -18,8 +18,8 @@ import ReactLoading from 'react-loading';
 
 toast.configure();
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-//const URL = "http://192.168.1.8:5000/";
-const URL = "http://35.193.141.235/";
+const URL = "http://192.168.1.8:5000/";
+//const URL = "http://35.193.141.235/";
 const placeholder_project = 'Project(s)'
 const placeholder_sitetype = 'SiteType'
 const placeholder_parameter = 'Parameter(s)'
@@ -140,6 +140,30 @@ class sideBarContent extends Component {
       }
     }
 
+    processResponse(action_type, data) {
+      if (action_type === 'map') {
+        if (data['legend'].length > 0) {
+          this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
+          ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
+        }
+        else {
+          ToastNotification('info',<strong>Empty Data.</strong>);
+        }
+      } else if (action_type === 'download') {
+        if (data != ''){
+          window.location.href = URL+data['filepath']
+          ToastNotification('success',<strong>File is downloading !</strong>); 
+        } else {
+          ToastNotification('success',<strong>No Data !</strong>)
+        }
+      } else if (action_type === 'table') {
+
+      } else {
+
+      }
+
+    }
+
     getData(action_type) {
       const { project, siteType, parameter, period, spin, show_partial_records } = this.state.filterContent
       const periodParam = dateParamCreator(period)
@@ -148,7 +172,8 @@ class sideBarContent extends Component {
         sitetype: siteType.selected.value,
         parameter: parameter.selected,
         customize_date: periodParam,
-        show_partial_records: show_partial_records
+        show_partial_records: show_partial_records,
+        action_type: action_type
       }
       this.toggleSpin()
       fetch(URL+'api/filter_data', {
@@ -161,13 +186,7 @@ class sideBarContent extends Component {
       }).then(response => response.json())
         .then(data => {
           this.toggleSpin()
-          if (data['legend'].length > 0) {
-            this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
-            ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
-          }
-          else {
-            ToastNotification('info',<strong>Empty Data.</strong>);
-          }
+          this.processResponse(action_type, data)
         },(error) => {
           this.toggleSpin()
           ToastNotification('error',<strong>Error in Data Loading</strong>);
@@ -209,7 +228,7 @@ class sideBarContent extends Component {
                             ? 
                             <ReactLoading type={'bars'} color={'black'} height={'20%'} width={'20%'} className='bubble-loading'/> 
                             : 
-                            null
+                            null    
       return(
           <div>
               <ListGroup variant="flush dark" >
@@ -311,7 +330,7 @@ class sideBarContent extends Component {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
-                  <Button variant="outline-dark" size="sm" id='Map-View' onClick={()=> this.grabData('map')}block>
+                  <Button variant="outline-dark" size="sm" id='Map-View' onClick={()=> this.grabData('map')} block>
                         View Map
                   </Button>
                 </ListGroup.Item>
@@ -321,7 +340,7 @@ class sideBarContent extends Component {
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
-                    <Button variant="outline-dark" size="sm" id='Download' block>
+                    <Button variant="outline-dark" size="sm" id='Download' onClick={()=> this.grabData('download')} block>
                       Download
                     </Button>
                 </ListGroup.Item>
