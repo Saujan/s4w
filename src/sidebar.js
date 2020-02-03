@@ -286,7 +286,7 @@ class sideBarContent extends Component {
                     onChange={(selected) => this.qualityMetricController(selected)}
                     type='checkbox'
                     id='quality_metric'
-                    label='show all sites that may only contain partial records for the selected period'
+                    label='Show all sites that may only contain partial records for the selected period'
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
