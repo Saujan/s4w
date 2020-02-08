@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import './App.css';
-import { Navbar, ButtonToolbar, Container, Row, Col , Button,Image} from 'react-bootstrap';
+import { ButtonToolbar, Container, Row, Col , Button,Image} from 'react-bootstrap';
 import { MdMenu } from 'react-icons/md';
 import Sidebar from "react-sidebar";
 import SideBarContent from './sidebar.js';
@@ -10,6 +10,7 @@ import Multiselect from 'react-bootstrap-multiselect';
 import MapDashboard from './map_dashboard'
 import DescriptionModal from './components/descriptionModal';
 import HotApp from './components/tableDashboard'
+import TableInterface from './components/tableInterface'
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
 const URL = "http://192.168.1.8:5000/";
@@ -90,7 +91,10 @@ class App extends Component {
       map_center: null
     },
     tableData: {
-      data: null
+      data: null,
+      dataSchema: null,
+      columnHeader: null,
+      columnProperty: null
     },
     currentView: {
       map: true
@@ -156,7 +160,10 @@ class App extends Component {
   tableDataCollector(data) {
     this.setState({
       tableData:{
-        data: data
+        data: data['data'],
+        columnHeader: data['column_headers'],
+        columnProperty: data['column_property'],
+        dataSchema: data['data_schema']
       },
       filterContent: {
         ...this.state.filterContent,
@@ -199,7 +206,7 @@ class App extends Component {
                         legend = {this.state.mapData.legend} 
                         map_center = {this.state.mapData.map_center}
                       /> 
-                        : <HotApp />
+                      : <TableInterface tableData={this.state.tableData}/>
     let descriptionModal = this.state.showModal.show ? 
       <DescriptionModal 
           data={this.state.mapData.data} 
@@ -210,7 +217,6 @@ class App extends Component {
           lng = {this.state.showModal.lng}
       /> 
       : ""
-    console.log('From Parent=> '+ this.state.filterContent.spin)
     return( this.state.filterContent.fetchedFilterContent ?
           (<div>
             <Sidebar

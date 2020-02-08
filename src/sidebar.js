@@ -157,6 +157,12 @@ class sideBarContent extends Component {
           ToastNotification('success',<strong>No Data !</strong>)
         }
       } else if (action_type === 'table') {
+        if (data['data'].length > 0) {
+          this.props.tableDataCollector(data);
+          ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
+        } else {
+          ToastNotification('info',<strong>Empty Data.</strong>);
+        }
 
       } else {
 
