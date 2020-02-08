@@ -18,8 +18,8 @@ import ReactLoading from 'react-loading';
 
 toast.configure();
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-const URL = "http://192.168.1.8:5000/";
-//const URL = "http://35.193.141.235/";
+//const URL = "http://192.168.1.8:5000/";
+const URL = "http://35.193.141.235/";
 const placeholder_project = 'Project(s)'
 const placeholder_sitetype = 'SiteType'
 const placeholder_parameter = 'Parameter(s)'
