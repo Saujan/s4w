@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import './App.css';
 import { Navbar, ButtonToolbar, Container, Row, Col , Button,Image} from 'react-bootstrap';
+import { MdMenu } from 'react-icons/md';
 import Sidebar from "react-sidebar";
 import SideBarContent from './sidebar.js';
 import './bootstrap-multiselect.css';
 import Multiselect from 'react-bootstrap-multiselect';
 import MapDashboard from './map_dashboard'
 import DescriptionModal from './components/descriptionModal';
-import HotApp from './components/TableDashboard'
+import HotApp from './components/tableDashboard'
 
 const data = [{ value:'One', selected:true }, { value: 'Two' }, { value:'Three' }]
-//const URL = "http://192.168.1.8:5000/";
-const URL = "http://35.193.141.235/";
+const URL = "http://192.168.1.8:5000/";
+//const URL = "http://35.193.141.235/";
 
 const sidebarStyles = {
 	
@@ -79,7 +80,7 @@ class App extends Component {
       },
       fetchedFilterContent: false,
       spin: false,
-      enable_quality_metric: false
+      enableQualityMetric: true
     },
     sidebarOpen: true,
     mapData: {
@@ -88,9 +89,11 @@ class App extends Component {
       legend: null,
       map_center: null
     },
+    tableData: {
+      data: null
+    },
     currentView: {
-      map: true,
-      table: false
+      map: true
     },
     showModal: {
       show: false,
@@ -143,6 +146,24 @@ class App extends Component {
       filterContent: {
         ...this.state.filterContent,
         spin: false
+      },
+      currentView: {
+        map: true
+      }
+    });
+  }
+
+  tableDataCollector(data) {
+    this.setState({
+      tableData:{
+        data: data
+      },
+      filterContent: {
+        ...this.state.filterContent,
+        spin: false
+      },
+      currentView: {
+        map: false
       }
     });
   }
@@ -170,16 +191,15 @@ class App extends Component {
 
   render(){
     let show_button = this.state.show_button;
-    // let mapDetail = this.state.currentView.map ? 
-    //                   <MapDashboard  
-    //                     controllSidebar={this.onSetSidebarOpen} 
-    //                     data={this.state.mapData.data} 
-    //                     showDescription={this.showDescription.bind(this)} 
-    //                     legend = {this.state.mapData.legend} 
-    //                     map_center = {this.state.mapData.map_center}
-    //                   /> 
-    //                     : ''
-    let mapDetail = <HotApp />
+    let mapDetail = this.state.currentView.map ? 
+                      <MapDashboard  
+                        //controllSidebar={this.onSetSidebarOpen} 
+                        data={this.state.mapData.data} 
+                        showDescription={this.showDescription.bind(this)} 
+                        legend = {this.state.mapData.legend} 
+                        map_center = {this.state.mapData.map_center}
+                      /> 
+                        : <HotApp />
     let descriptionModal = this.state.showModal.show ? 
       <DescriptionModal 
           data={this.state.mapData.data} 
@@ -194,14 +214,26 @@ class App extends Component {
     return( this.state.filterContent.fetchedFilterContent ?
           (<div>
             <Sidebar
-              sidebar={<SideBarContent filterContent={this.state.filterContent} dataCollector ={this.dataCollector.bind(this)}/>}
+              sidebar={
+                        <SideBarContent 
+                          filterContent={this.state.filterContent} 
+                          dataCollector ={this.dataCollector.bind(this)}
+                          tableDataCollector={this.tableDataCollector.bind(this)}
+                        />
+                      }
               open={this.state.sidebarOpen}
               onSetOpen={this.onSetSidebarOpen}
-              styles={{ sidebar: { background: '#d3d3d3' , width:'275px', position:'fixed'} }}
+              styles={{ sidebar: { background: '#d3d3d3' , width:'275px', position:'fixed'} }
+                      }
             >
               { mapDetail }
               {descriptionModal}
-            </Sidebar>  
+            </Sidebar>
+            <div className='menu-left-button'>
+          <div id='open-sidebar' onClick={this.onSetSidebarOpen.bind(this)}>
+              <MdMenu size='2.25em'/>
+            </div>
+          </div>
            </div>
           ): null)
   }

@@ -18,8 +18,8 @@ import ReactLoading from 'react-loading';
 
 toast.configure();
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-//const URL = "http://192.168.1.2:5000/";
-const URL = "http://35.193.141.235/";
+const URL = "http://192.168.1.8:5000/";
+//const URL = "http://35.193.141.235/";
 const placeholder_project = 'Project(s)'
 const placeholder_sitetype = 'SiteType'
 const placeholder_parameter = 'Parameter(s)'
@@ -108,7 +108,7 @@ class sideBarContent extends Component {
       this.setState({
         filterContent: {
           ...this.state.filterContent,
-          enable_quality_metric: e.target.checked
+          enableQualityMetric: e.target.checked
         }
       })
     }
@@ -148,11 +148,15 @@ class sideBarContent extends Component {
         sitetype: siteType.selected.value,
         parameter: parameter.selected,
         customize_date: periodParam,
-        enable_quality_metric: enableQualityMetric
+        action_type: action_type,
+        show_partial_records: !enableQualityMetric
       }
       this.toggleSpin()
 
-      fetch(URL+'api/filter_data', {
+      let final_url = URL;
+      final_url+='api/filter_data'
+
+      fetch(final_url, {
         method: 'POST',
         body: JSON.stringify(params),
         headers: {
@@ -162,18 +166,23 @@ class sideBarContent extends Component {
       }).then(response => response.json())
         .then(data => {
           this.toggleSpin()
-          if (data['legend'].length > 0) {
-            this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
-            ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
+          if (action_type == 'map'){
+            if (data['legend'].length > 0) {
+              this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
+              ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
+            }
+            else {
+              ToastNotification('info',<strong>Empty Data.</strong>);
+            }
           }
-          else {
-            ToastNotification('info',<strong>Empty Data.</strong>);
+          else if (action_type == 'table'){
+            this.props.tableDataCollector('something')
+            ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
           }
         },(error) => {
           this.toggleSpin()
           ToastNotification('error',<strong>Error in Data Loading</strong>);
         });
-
     }
 
     render(){
@@ -317,7 +326,7 @@ class sideBarContent extends Component {
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
-                  <Button variant="outline-dark" size="sm" id='Taple-View' block>
+                  <Button variant="outline-dark" size="sm" id='Taple-View' onClick={()=> this.grabData('table')}block>
                         View Table
                   </Button>
                 </ListGroup.Item>
