@@ -108,7 +108,7 @@ class sideBarContent extends Component {
       this.setState({
         filterContent: {
           ...this.state.filterContent,
-          enableQualityMetric: e.target.checked
+          show_partial_records: e.target.checked
         }
       })
     }
@@ -140,16 +140,40 @@ class sideBarContent extends Component {
       }
     }
 
+    processResponse(action_type, data) {
+      if (action_type === 'map') {
+        if (data['legend'].length > 0) {
+          this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
+          ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
+        }
+        else {
+          ToastNotification('info',<strong>Empty Data.</strong>);
+        }
+      } else if (action_type === 'download') {
+        if (data != ''){
+          window.location.href = URL+data['filepath']
+          ToastNotification('success',<strong>File is downloading !</strong>); 
+        } else {
+          ToastNotification('success',<strong>No Data !</strong>)
+        }
+      } else if (action_type === 'table') {
+
+      } else {
+
+      }
+
+    }
+
     getData(action_type) {
-      const { project, siteType, parameter, period, spin, enableQualityMetric } = this.state.filterContent
+      const { project, siteType, parameter, period, spin, show_partial_records } = this.state.filterContent
       const periodParam = dateParamCreator(period)
       let params = {
         project: project.selected,
         sitetype: siteType.selected.value,
         parameter: parameter.selected,
         customize_date: periodParam,
-        action_type: action_type,
-        show_partial_records: !enableQualityMetric
+        show_partial_records: show_partial_records,
+        action_type: action_type
       }
       this.toggleSpin()
 
@@ -166,19 +190,7 @@ class sideBarContent extends Component {
       }).then(response => response.json())
         .then(data => {
           this.toggleSpin()
-          if (action_type == 'map'){
-            if (data['legend'].length > 0) {
-              this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
-              ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
-            }
-            else {
-              ToastNotification('info',<strong>Empty Data.</strong>);
-            }
-          }
-          else if (action_type == 'table'){
-            this.props.tableDataCollector('something')
-            ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
-          }
+          this.processResponse(action_type, data)
         },(error) => {
           this.toggleSpin()
           ToastNotification('error',<strong>Error in Data Loading</strong>);
@@ -219,7 +231,7 @@ class sideBarContent extends Component {
                             ? 
                             <ReactLoading type={'bars'} color={'black'} height={'20%'} width={'20%'} className='bubble-loading'/> 
                             : 
-                            null
+                            null    
       return(
           <div>
               <ListGroup variant="flush dark" >
@@ -271,6 +283,16 @@ class sideBarContent extends Component {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
+                  <FormCheck
+                    custom
+                    name='start-end-date'
+                    onChange={(selected) => this.qualityMetricController(selected)}
+                    type='checkbox'
+                    id='quality_metric'
+                    label='Show all sites that may only contain partial records for the selected period'
+                  />
+                </ListGroup.Item>
+                <ListGroup.Item variant="dark">
                   <FormCheck 
                     custom
                     name='start-end-date'
@@ -279,16 +301,6 @@ class sideBarContent extends Component {
                     id='start-end-date'
                     label='Start-End Date'
                     id='S-T-D'
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item variant="dark">
-                  <FormCheck
-                    custom
-                    name='start-end-date'
-                    onChange={(selected) => this.qualityMetricController(selected)}
-                    type='checkbox'
-                    id='quality_metric'
-                    label='Enable Quality Metric'
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant='dark'>
@@ -321,7 +333,7 @@ class sideBarContent extends Component {
                   />
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
-                  <Button variant="outline-dark" size="sm" id='Map-View' onClick={()=> this.grabData('map')}block>
+                  <Button variant="outline-dark" size="sm" id='Map-View' onClick={()=> this.grabData('map')} block>
                         View Map
                   </Button>
                 </ListGroup.Item>
@@ -331,7 +343,7 @@ class sideBarContent extends Component {
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
-                    <Button variant="outline-dark" size="sm" id='Download' block>
+                    <Button variant="outline-dark" size="sm" id='Download' onClick={()=> this.grabData('download')} block>
                       Download
                     </Button>
                 </ListGroup.Item>

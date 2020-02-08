@@ -80,7 +80,7 @@ class App extends Component {
       },
       fetchedFilterContent: false,
       spin: false,
-      enableQualityMetric: true
+      show_partial_records: false
     },
     sidebarOpen: true,
     mapData: {
