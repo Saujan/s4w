@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { InputGroup, Button, OverlayTrigger, Tooltip, Spinner} from 'react-bootstrap';
+import { InputGroup, Button, OverlayTrigger, Tooltip, Spinner, ButtonGroup} from 'react-bootstrap';
 import { FormCheck, Container, Row, Col , FormControl,ListGroup, ListGroupItem} from 'react-bootstrap';
+import { AiTwotoneSetting } from "react-icons/ai";
 import Sidebar from "react-sidebar";
 import Select from 'react-select';
 import './bootstrap.min.css';
@@ -173,13 +174,15 @@ class sideBarContent extends Component {
     getData(action_type) {
       const { project, siteType, parameter, period, spin, show_partial_records } = this.state.filterContent
       const periodParam = dateParamCreator(period)
+      let { weekly, overlapRatio } = this.state.filterContent.setMetric    
       let params = {
         project: project.selected,
         sitetype: siteType.selected.value,
         parameter: parameter.selected,
         customize_date: periodParam,
         show_partial_records: show_partial_records,
-        action_type: action_type
+        action_type: action_type,
+        metric: { weekly: weekly, overlapRatio: overlapRatio }
       }
       this.toggleSpin()
 
@@ -237,7 +240,8 @@ class sideBarContent extends Component {
                             ? 
                             <ReactLoading type={'bars'} color={'black'} height={'20%'} width={'20%'} className='bubble-loading'/> 
                             : 
-                            null    
+                            null
+      let { weekly, overlapRatio } = this.state.filterContent.setMetric    
       return(
           <div>
               <ListGroup variant="flush dark" >
@@ -330,13 +334,60 @@ class sideBarContent extends Component {
                       placeholderText='End Date'
                       disabled={period.isRangeDateDisabled}
                       customInput={<CustomEndDateInput/>}
-                      // popperModifiers={{
-                      //     offset: {
-                      //       enabled: true,
-                      //       offset: "0px, -5px"
-                      //     }
-                      //   }}
                   />
+                </ListGroup.Item>
+                <ListGroup.Item variant='dark'>
+                  <Row>
+                    <Col xs={6} md={6}>
+                      <InputGroup>
+                        <OverlayTrigger
+                          key={'top'}
+                          placement={'top'}
+                          overlay={
+                            <Tooltip id={`tooltip-'top'`}>
+                              Set Weekly Measurements<br></br>
+                              Default: (n/7)<br></br>
+                              n : No. of days in selected time period 
+                            </Tooltip>
+                          }>
+                          <InputGroup.Prepend>
+                            <InputGroup.Text id="btnGroupAddon"><AiTwotoneSetting /></InputGroup.Text>
+                          </InputGroup.Prepend>
+                        </OverlayTrigger>
+                        <FormControl
+                          type="text"
+                          placeholder={weekly}
+                          aria-label="Input group example"
+                          aria-describedby="btnGroupAddon"
+                          value={weekly}
+                        />
+                      </InputGroup>
+                    </Col>
+                    <Col xs={6} md={6}>
+                      <InputGroup>
+                        <OverlayTrigger
+                          key={'top'}
+                          placement={'top'}
+                          overlay={
+                            <Tooltip id={`tooltip-'top'`}>
+                              Overlap Ratio:<br></br>
+                              (site max date - site min date)/(number of days in selected period -1)
+                            </Tooltip>
+                          }>
+                          <InputGroup.Prepend>
+                            <InputGroup.Text id="btnGroupAddon"><AiTwotoneSetting /></InputGroup.Text>
+                          </InputGroup.Prepend>
+                        </OverlayTrigger>
+                        <FormControl
+                          type="text"
+                          placeholder=""
+                          aria-label="Input group example"
+                          aria-describedby="btnGroupAddon"
+                          value={overlapRatio}
+                        />
+                      </InputGroup>
+                    </Col>
+                  </Row>
                 </ListGroup.Item>
                 <ListGroup.Item variant="dark">
                   <Button variant="outline-dark" size="sm" id='Map-View' onClick={()=> this.grabData('map')} block>

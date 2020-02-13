@@ -81,7 +81,11 @@ class App extends Component {
       },
       fetchedFilterContent: false,
       spin: false,
-      show_partial_records: false
+      show_partial_records: false,
+      setMetric: {
+        weekly: 1,
+        overlapRatio: .75
+      }
     },
     sidebarOpen: true,
     mapData: {
