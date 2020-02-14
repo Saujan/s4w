@@ -66,6 +66,19 @@ class sideBarContent extends Component {
       this.setState({ selectedOption : value});
     };
 
+    changeMetric(e, identity) {
+      const value = e.target.value
+      this.setState({
+        filterContent: {
+          ...this.state.filterContent,
+          setMetric: {
+            ...this.state.filterContent.setMetric,
+            [identity]: value
+          }
+        }
+      })
+    }
+
     changeHandler(idendity, value) {
       let valueSet = {...this.state.filterContent[idendity]}
       valueSet.selected = value
@@ -174,7 +187,11 @@ class sideBarContent extends Component {
     getData(action_type) {
       const { project, siteType, parameter, period, spin, show_partial_records } = this.state.filterContent
       const periodParam = dateParamCreator(period)
-      let { weekly, overlapRatio } = this.state.filterContent.setMetric    
+      let { weekly, overlapRatio } = this.state.filterContent.setMetric
+      if (isNaN(weekly) || isNaN(overlapRatio)) {
+        ToastNotification('error',<strong>Metric data should be number.</strong>);
+        return 0;
+      }
       let params = {
         project: project.selected,
         sitetype: siteType.selected.value,
@@ -360,6 +377,7 @@ class sideBarContent extends Component {
                           aria-label="Input group example"
                           aria-describedby="btnGroupAddon"
                           value={weekly}
+                          onChange={(e) => this.changeMetric(e, 'weekly')}
                         />
                       </InputGroup>
                     </Col>
@@ -384,6 +402,7 @@ class sideBarContent extends Component {
                           aria-label="Input group example"
                           aria-describedby="btnGroupAddon"
                           value={overlapRatio}
+                          onChange={(e) => this.changeMetric(e, 'overlapRatio')}
                         />
                       </InputGroup>
                     </Col>
