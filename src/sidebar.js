@@ -156,8 +156,8 @@ class sideBarContent extends Component {
 
     processResponse(action_type, data) {
       if (action_type === 'map') {
-        if (data['legend'].length > 0) {
-          this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center']);
+        if (data['data'] != '{}') {
+          this.props.dataCollector(data['data'], data['monitor'], data['legend'], data['map_center'], data['data_type_property']);
           ToastNotification('success',<strong>Data Loaded Successfully !</strong>);
         }
         else {
