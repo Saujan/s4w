@@ -10,11 +10,23 @@ const msmt_datetime = "msmt_datetime";
 const precip_image = "precip_image";
 const precip_cmnts = "precip_cmnts";
 
-const columns_headers = [MonID, meta_instance_ids, precip, precip_image, precip_cmnts, msmt_datetime];
+//let columns_headers = [MonID, meta_instance_ids, msmt_datetime, precip, precip_image, precip_cmnts];
+let columns_headers = [MonID, meta_instance_ids, msmt_datetime];
 const links = [precip_image];
 
-function createData(data, siteid, monitors){
+function table_headers(dataTypeProperty) {
+  let headers = [MonID, meta_instance_ids, msmt_datetime]
+  headers = headers.concat(dataTypeProperty['table_headers'])
+  return headers
+}
+
+function link_columns(dataTypeProperty) {
+  return dataTypeProperty['link_columns']
+}
+
+function createData(data, siteid, monitors, dataTypeProperty){
     var a_row = {};
+    let columns_headers = table_headers(dataTypeProperty)
     return data[meta_instance_ids][siteid].map(function(meta_instance_id, index)
       {
         a_row = {};
@@ -31,7 +43,10 @@ function createData(data, siteid, monitors){
       })
   }
 
-function createColumn(data, siteid){
+function createColumn(data, siteid, dataTypeProperty){
+  let columns_headers = table_headers(dataTypeProperty)
+  //let links = link_columns(dataTypeProperty)
+  //alert(links)
   const columns = columns_headers.map(function(value)
     {
       let column = '';
@@ -66,8 +81,9 @@ function SingleGroupTable(props) {
    const dataSource = JSON.parse(props.data);
    const siteid = props.siteid;
    const monitors = props.monitors;
-   const data = createData(dataSource, siteid, monitors);
-   const columns = createColumn(data, siteid);
+   const dataTypeProperty = props.dataTypeProperty
+   const data = createData(dataSource, siteid, monitors, dataTypeProperty);
+   const columns = createColumn(data, siteid, dataTypeProperty);
   return (
     <Table  size="small" scroll={{ x: true}} dataSource={data} columns={columns} pagination={{ defaultPageSize: 50, showSizeChanger: true, pageSizeOptions: ['50', '100', '150']}}/>
     )

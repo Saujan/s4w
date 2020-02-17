@@ -92,7 +92,8 @@ class App extends Component {
       data: null,
       monitor_details: null,
       legend: null,
-      map_center: null
+      map_center: null,
+      measureableColumnsProperty: null
     },
     tableData: {
       data: null,
@@ -142,14 +143,15 @@ class App extends Component {
 
   }
 
-  dataCollector(data, monitors, legend, lat_lon) {
+  dataCollector(data, monitors, legend, lat_lon, data_type_property) {
     console.log('from collector')
     this.setState({
       mapData:{
         data: data,
         monitor_details: monitors,
         legend: legend,
-        map_center: lat_lon
+        map_center: lat_lon,
+        measureableColumnsProperty: data_type_property
       },
       filterContent: {
         ...this.state.filterContent,
@@ -209,6 +211,7 @@ class App extends Component {
                         showDescription={this.showDescription.bind(this)} 
                         legend = {this.state.mapData.legend} 
                         map_center = {this.state.mapData.map_center}
+                        measureableColumnsProperty={this.state.mapData.measureableColumnsProperty}
                       /> 
                       : <TableInterface tableData={this.state.tableData}/>
     let descriptionModal = this.state.showModal.show ? 
@@ -219,6 +222,7 @@ class App extends Component {
           monitors = {this.state.mapData.monitor_details} 
           lat = {this.state.showModal.lat} 
           lng = {this.state.showModal.lng}
+          measureableColumnsProperty={this.state.mapData.measureableColumnsProperty}
       /> 
       : ""
     return( this.state.filterContent.fetchedFilterContent ?

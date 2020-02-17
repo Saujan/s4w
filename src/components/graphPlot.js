@@ -19,37 +19,84 @@ class GraphP extends React.Component {
     return nextProps.data != this.props.data;
   }
 
-  createData(){
-    var sum = 0;
-    const data = JSON.parse(this.props.data);
-    const siteid = this.props.siteid;
-    const precips = data[precip][siteid].map(function(value){ return parseFloat(value)});
-    const accumulated_precips = data[precip][siteid].map(function(value){ sum +=parseFloat(value); return sum;})
-    return {
-            datasets: [{
-                label: accumulated_label,
-                type:'line',
-                data: accumulated_precips,
-                fill: false,
-                borderColor: '#808080',
-                backgroundColor: '#808080',
-                pointBorderColor: '#808080',
-                pointBackgroundColor: '#808080',
-                pointHoverBackgroundColor: '#808080',
-                pointHoverBorderColor: '#808080',
-                yAxisID: 'y-axis-2'
-              },{
+  shouldProceedCummulative() {
+    const measureableColumn = this.props.measureableColumn
+    const cummulativeColumns = this.props.cummulativeColumns
+    return cummulativeColumns.indexOf(measureableColumn) > -1 ? true : false
+
+  }
+
+  constructDatasets(measureableData) {
+    const measureableValues = measureableData.map(function(value){ return parseFloat(value)});
+    let bar_data = {
                 type: 'bar',
                 label: y_label,
-                data: precips,
+                data: measureableValues,
                 fill: false,
                 backgroundColor: '#269DC7',
                 borderColor: '#269DC7',
                 hoverBackgroundColor: '#269DC7',
                 hoverBorderColor: '#269DC7',
                 yAxisID: 'y-axis-1'
-              }]
+              }
+
+    if (this.shouldProceedCummulative()) {
+      let sum = 0
+      const cummulative_data = measureableData.map(function(value){ sum +=parseFloat(value); return sum;})
+      let accumulated_data = {
+                type: 'line',
+                label: accumulated_label,
+                data: cummulative_data,
+                fill: false,
+                backgroundColor: '#808080',
+                borderColor: '#808080',
+                hoverBackgroundColor: '#808080',
+                hoverBorderColor: '#808080',
+                yAxisID: 'y-axis-2'
+              }
+      return {
+        datasets:[accumulated_data, bar_data]
+      }
+
+    } else {
+      return {
+            datasets: [bar_data]
           };
+    }
+  }
+
+  createData(){
+    const data = JSON.parse(this.props.data);
+    const siteid = this.props.siteid;
+    const measureableColumn = this.props.measureableColumn
+    const measureableData = data[measureableColumn][siteid]
+
+    return this.constructDatasets(measureableData)
+  }
+
+  createYaxes() {
+    const axesOne = { type: 'linear', display: true, position: 'left', id: 'y-axis-1',
+                      gridLines: {
+                        display: false
+                      },
+                      labels: {
+                        show: true
+                      }
+                    }
+        
+    if (this.shouldProceedCummulative()) {
+      const axesTwo = { type: 'linear', display: true, position: 'right', id: 'y-axis-2',
+                        gridLines: {
+                          display: false
+                        },
+                        labels: {
+                          show: true
+                    }
+                  }
+      return [axesOne, axesTwo]
+    } else {
+      return [axesOne]
+    }
   }
 
   createOptions(){
@@ -76,32 +123,7 @@ class GraphP extends React.Component {
             labels: x_labels,
           }
         ],
-        yAxes: [
-          {
-            type: 'linear',
-            display: true,
-            position: 'left',
-            id: 'y-axis-1',
-            gridLines: {
-              display: false
-            },
-            labels: {
-              show: true
-            }
-          },
-          {
-            type: 'linear',
-            display: true,
-            position: 'right',
-            id: 'y-axis-2',
-            gridLines: {
-              display: false
-            },
-            labels: {
-              show: true
-            }
-          }
-        ]
+        yAxes: this.createYaxes()
       }
     };
   }
