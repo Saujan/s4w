@@ -90,7 +90,7 @@
 }
 
 .legend-right {
-  top: 60px;
+  top: 100px;
   right: 10px;
   float: right;
   position: relative;
@@ -116,14 +116,15 @@ table tr td {
 
 .circle-div {
   /* background-color: red; */
-  border-radius: 5px;
-  width: 10px;
-  height: 10px;
+  border-radius: 8px;
+  width: 16px;
+  height: 16px;
   vertical-align: inherit;
 }
 
 .range-div {
   width : 100%;
+  font-size: 1.1em;
 }
 
 .styled-toast-success {
@@ -151,7 +152,7 @@ table tr td {
 }
 .menu-left-button {
   top: 10px;
-  left: 182px;
+  left: 10px;
   float: left;
   position: relative;
 }
@@ -180,4 +181,18 @@ table tr td {
 .bubble-loading {
   /* display: inline-block; */
   margin: 0 auto;
+}
+/* 
+.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+  display : none;
+} */
+
+div.gmnoprint:last-child {
+  /* display:none; */
+  position: relative;
+  top: 0px !important;
+  /* bottom:10px !important; */
+  right: 60px !important;
+  left: unset !important;
+  float: right;
 }
