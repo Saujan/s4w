@@ -8,6 +8,7 @@ import './bootstrap.min.css'
 import './App.css'
 import MapLegend from './legend.js'
 import { MdMenu } from 'react-icons/md';
+import MenuButton from './components/menu_button'
 
 const SiteId = "_id.siteid";
 const SiteName = "SiteName";
@@ -107,11 +108,8 @@ class MapDashboard extends React.Component {
           <MapLegend legend={this.props.legend}/>
         </div>
         {/* div component for legend ends */}
-
         <div className='menu-left-button'>
-          <div id='open-sidebar' onClick={this.controlSidebar}>
-            <MdMenu size='2.25em'/>
-          </div>
+          <MenuButton controlMenu={this.props.controlMenu}/>
         </div>
       </div>
     );

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Navbar } from 'react-bootstrap';
 import logo from '../logo.png';
 import HotApp from './tableDashboard'
+import MenuButton from './menu_button'
 
 class TableInterface extends React.Component {
   constructor(props) {
@@ -21,6 +22,9 @@ class TableInterface extends React.Component {
                 height="40"
                 className="d-inline-block align-top"
               />{' '}
+            </Navbar.Brand>
+            <Navbar.Brand >
+              <MenuButton controlMenu={this.props.controlMenu}/>
             </Navbar.Brand>
           </Navbar>
           <HotApp tableData={this.props.tableData}/>
