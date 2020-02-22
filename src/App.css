@@ -182,10 +182,7 @@ table tr td {
   /* display: inline-block; */
   margin: 0 auto;
 }
-/* 
-.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
-  display : none;
-} */
+
 
 div.gmnoprint:last-child {
   /* display:none; */

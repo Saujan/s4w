@@ -35,4 +35,9 @@
 	}
 }
 
-
+@media only screen and (max-width: 768px) {
+	/* for Mobile device (assuming max-width 768px only) , zoom control is disabled */ 
+	.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
+		display : none;
+	  } 
+}
