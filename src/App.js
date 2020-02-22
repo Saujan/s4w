@@ -120,6 +120,13 @@ class App extends Component {
 	this.setState({ sidebarOpen: open });
   }
 
+  controlMenu() {
+    let sidebarOpen = this.state.sidebarOpen;
+    this.setState({
+      sidebarOpen: !sidebarOpen
+    })
+  }
+
   componentDidMount() {
     $.ajax({
       url: URL+'api/filter_content',
@@ -212,8 +219,9 @@ class App extends Component {
                         legend = {this.state.mapData.legend} 
                         map_center = {this.state.mapData.map_center}
                         measureableColumnsProperty={this.state.mapData.measureableColumnsProperty}
+                        controlMenu={this.controlMenu.bind(this)}
                       /> 
-                      : <TableInterface tableData={this.state.tableData}/>
+                      : <TableInterface tableData={this.state.tableData} controlMenu={this.controlMenu.bind(this)}/>
     let descriptionModal = this.state.showModal.show ? 
       <DescriptionModal 
           data={this.state.mapData.data} 
@@ -243,11 +251,6 @@ class App extends Component {
               { mapDetail }
               {descriptionModal}
             </Sidebar>
-            <div className='menu-left-button'>
-          <div id='open-sidebar' onClick={this.onSetSidebarOpen.bind(this)}>
-              <MdMenu size='2.25em'/>
-            </div>
-          </div>
            </div>
           ): null)
   }
