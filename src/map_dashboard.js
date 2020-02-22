@@ -47,7 +47,7 @@ class MapDashboard extends React.Component {
     if (met_metric) {
       icon_pin['path'] = 'M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z'
       icon_pin['fillOpacity'] = 1
-      icon_pin['scale'] = 0.025
+      icon_pin['scale'] = 0.035 // changed marker scale from 0.025
     } else {
       icon_pin['path'] = 'M 100 100 L 300 100 L 200 300 z'
       icon_pin['fillColor'] = color

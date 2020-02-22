@@ -182,10 +182,7 @@ table tr td {
   /* display: inline-block; */
   margin: 0 auto;
 }
-/* 
-.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
-  display : none;
-} */
+
 
 div.gmnoprint:last-child {
   /* display:none; */
@@ -195,4 +192,19 @@ div.gmnoprint:last-child {
   right: 60px !important;
   left: unset !important;
   float: right;
+}
+
+.ht_clone_top.handsontable {
+  z-index: auto;
+} 
+
+.navbar.navbar-light.bg-light.sticky-top {
+  z-index: auto;
+  background-image: url('water.jpg');
+}
+
+.custom-image {
+  display: block;
+  margin-left: auto;
+  margin-right: 10px;
 }

@@ -13,22 +13,21 @@ class TableInterface extends React.Component {
   render() {
     return (
       <div>
-          <Navbar style={{position: "sticky"}} bg="dark" variant="dark">
-            <Navbar.Brand href="#home">
-              <img
-                alt=""
-                src={logo}
-                width="150"
-                height="40"
-                className="d-inline-block align-top"
-              />{' '}
-            </Navbar.Brand>
+          <Navbar bg="light" variant="light" sticky='top'>   
+            <img
+              alt=""
+              src={logo}
+              width="150"
+              height="40"
+              className="custom-image"
+            />
             <Navbar.Brand >
               <MenuButton controlMenu={this.props.controlMenu}/>
             </Navbar.Brand>
           </Navbar>
-          <HotApp tableData={this.props.tableData}/>
-      
+          <div className="handsOnTable-content"> 
+            <HotApp tableData={this.props.tableData}/>
+          </div>                
       </div>
     );
   }
