@@ -39,5 +39,18 @@
 	/* for Mobile device (assuming max-width 768px only) , zoom control is disabled */ 
 	.gmnoprint.gm-bundled-control.gm-bundled-control-on-bottom {
 		display : none;
-	  } 
+	} 
+	
+	.circle-div {
+	/* background-color: red; */
+		border-radius: 5px;
+		width: 10px;
+		height: 10px;
+		vertical-align: inherit;
+	}
+
+	.range-div {
+		width : 100%;
+		font-size: unset;
+	}
 }
