@@ -15,6 +15,7 @@ class HotApp extends React.Component {
         stretchH: "all",
         allowEmpty: true,
         fillHandle: false,
+        width: '100%',
         columns: this.props.tableData.columnProperty,
         colHeaders: this.props.tableData.columnHeader,
         //colWidths: [40, 60, 300, 120, 80, 80],

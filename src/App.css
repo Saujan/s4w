@@ -193,3 +193,18 @@ div.gmnoprint:last-child {
   left: unset !important;
   float: right;
 }
+
+.ht_clone_top.handsontable {
+  z-index: auto;
+} 
+
+.navbar.navbar-light.bg-light.sticky-top {
+  z-index: auto;
+  background-image: url('water.jpg');
+}
+
+.custom-image {
+  display: block;
+  margin-left: auto;
+  margin-right: 10px;
+}
