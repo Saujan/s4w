@@ -29,8 +29,7 @@ class DescriptionModal extends React.Component {
     const measureable_columns_property = this.props.measureableColumnsProperty
     let data = JSON.parse(this.props.data)
     let siteid = this.props.siteId
-
-    if (measureable_columns_property['measureable'].length > 0){
+    if (measureable_columns_property['measureable'].length > 0 && data['*meta-instance-id*'][siteid].length > 1){
         let showable = measureable_columns_property['measureable'].filter(function(column){
           return data[column][siteid].length > 0
         })
