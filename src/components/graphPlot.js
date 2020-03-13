@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import {Bar} from 'react-chartjs-2';
 import {Bubble} from 'react-chartjs-2';
 
-const accumulated_label = "Accumulated Precip";
+const accumulated_label = "Accumulated Precip (mm)";
 const y_label = "Precip (mm)";
 const precip = 'precip_mm';
 
