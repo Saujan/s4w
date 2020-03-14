@@ -1,0 +1,17 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags:
+    - public
+  script:
+    - echo 'hello from gitlab-runner'
+
+deploy_production:
+  stage: deploy
+  tags:
+    - public
+  script:
+    - echo 'public app deployed'
