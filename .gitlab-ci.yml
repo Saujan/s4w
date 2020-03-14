@@ -9,6 +9,8 @@ build:
     - public
   script:
     - echo 'hello from gitlab-runner'
+    - screen -r
+
 
 run_test:
   stage: test
