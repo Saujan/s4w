@@ -9,6 +9,7 @@ build:
     - public
   script:
     - echo 'hello from gitlab-runner'
+    - echo 'testing'
     - sudo screen -r
 
 
