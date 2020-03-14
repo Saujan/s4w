@@ -10,7 +10,7 @@ build:
   script:
     - echo 'hello from gitlab-runner'
     - echo 'testing2'
-    - sudo screen -r
+    - screen -r
 
 
 run_test:
