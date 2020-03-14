@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
   - deploy
 
 build:
@@ -8,6 +9,13 @@ build:
     - public
   script:
     - echo 'hello from gitlab-runner'
+
+run_test:
+  stage: test
+  tags:
+    - public
+  script:
+    - echo 'running test'
 
 deploy_production:
   stage: deploy
