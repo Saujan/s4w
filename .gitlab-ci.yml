@@ -12,11 +12,10 @@ build:
   tags:
     - public
   script:
-    - ls
-    - echo 'hello from gitlab-runner'
+    - echo 'building app'
     - echo 'testing2'
-    - whoami
-    - screen -r
+    - npm install
+    - echo 'installed >'
 
 
 run_test:
