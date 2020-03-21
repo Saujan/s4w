@@ -3,11 +3,16 @@ stages:
   - test
   - deploy
 
+cache:
+  paths:
+  - projects/s4w_public_template
+
 build:
   stage: build
   tags:
     - public
   script:
+    - ls
     - echo 'hello from gitlab-runner'
     - echo 'testing2'
     - whoami
