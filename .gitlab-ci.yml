@@ -15,7 +15,8 @@ build:
     - echo 'building app'
     - echo 'testing2'
     - npm install
-    - echo 'installed >'
+    - npm run-script build
+    - echo 'installed and built >'
 
 
 run_test:
